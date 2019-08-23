@@ -12,6 +12,14 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		170A92272310275A007488D1 /* RNEsriMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170A92262310275A007488D1 /* RNEsriMapView.swift */; };
+		170A922923102AF2007488D1 /* RNEsriRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170A922823102AF2007488D1 /* RNEsriRouter.swift */; };
+		170A922B23102B58007488D1 /* RNEsriGraphicsOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170A922A23102B58007488D1 /* RNEsriGraphicsOverlay.swift */; };
+		170A922F23102E71007488D1 /* RNEsriMapViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170A922E23102E71007488D1 /* RNEsriMapViewManager.swift */; };
+		170A923123102E87007488D1 /* RNEsriMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 170A923023102E87007488D1 /* RNEsriMapViewManager.m */; };
+		17FDA86723107047002C52D3 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FDA86623107047002C52D3 /* Point.swift */; };
+		17FDA869231070CC002C52D3 /* Polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FDA868231070CC002C52D3 /* Polygon.swift */; };
+		17FDA86D2310978A002C52D3 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FDA86C2310978A002C52D3 /* Line.swift */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -52,7 +60,16 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = app/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = app/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = app/main.m; sourceTree = "<group>"; };
+		170A922523102759007488D1 /* app-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "app-Bridging-Header.h"; sourceTree = "<group>"; };
+		170A92262310275A007488D1 /* RNEsriMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNEsriMapView.swift; sourceTree = "<group>"; };
+		170A922823102AF2007488D1 /* RNEsriRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNEsriRouter.swift; sourceTree = "<group>"; };
+		170A922A23102B58007488D1 /* RNEsriGraphicsOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNEsriGraphicsOverlay.swift; sourceTree = "<group>"; };
+		170A922E23102E71007488D1 /* RNEsriMapViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RNEsriMapViewManager.swift; path = app/RNEsriMapViewManager.swift; sourceTree = "<group>"; };
+		170A923023102E87007488D1 /* RNEsriMapViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNEsriMapViewManager.m; path = app/RNEsriMapViewManager.m; sourceTree = "<group>"; };
 		179E96E92CAD399ED669358F /* libPods-app.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-app.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17FDA86623107047002C52D3 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		17FDA868231070CC002C52D3 /* Polygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polygon.swift; sourceTree = "<group>"; };
+		17FDA86C2310978A002C52D3 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* app-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "app-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* app-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "app-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		39EFA5F7989C776CD8A37636 /* Pods-app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app.debug.xcconfig"; path = "Target Support Files/Pods-app/Pods-app.debug.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +149,15 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				170A922523102759007488D1 /* app-Bridging-Header.h */,
+				17FDA86C2310978A002C52D3 /* Line.swift */,
+				17FDA86623107047002C52D3 /* Point.swift */,
+				17FDA868231070CC002C52D3 /* Polygon.swift */,
+				170A922823102AF2007488D1 /* RNEsriRouter.swift */,
+				170A92262310275A007488D1 /* RNEsriMapView.swift */,
+				170A922A23102B58007488D1 /* RNEsriGraphicsOverlay.swift */,
+				170A922E23102E71007488D1 /* RNEsriMapViewManager.swift */,
+				170A923023102E87007488D1 /* RNEsriMapViewManager.m */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -161,7 +187,6 @@
 				4E5A026AA501C43D6DABAE0D /* Pods-appTests.debug.xcconfig */,
 				FE2D61B37D4E4DC1C6ADDE74 /* Pods-appTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -230,6 +255,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				7F98072D93B58513B83034E1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -292,6 +318,10 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = V495L9HL69;
+						LastSwiftMigration = 1030;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -308,6 +338,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -407,6 +438,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7F98072D93B58513B83034E1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-app/Pods-app-frameworks.sh",
+				"${PODS_ROOT}/ArcGIS-Runtime-SDK-iOS/ArcGIS.framework",
+				"${PODS_ROOT}/ArcGIS-Runtime-SDK-iOS/ArcGIS.framework.dSYM",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ArcGIS.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/ArcGIS.framework.dSYM",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-app/Pods-app-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7FA615827D21CCF28478C606 /* [CP] Check Pods Manifest.lock */ = {
@@ -528,8 +579,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17FDA86723107047002C52D3 /* Point.swift in Sources */,
+				170A923123102E87007488D1 /* RNEsriMapViewManager.m in Sources */,
+				170A922F23102E71007488D1 /* RNEsriMapViewManager.swift in Sources */,
+				170A922B23102B58007488D1 /* RNEsriGraphicsOverlay.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				17FDA869231070CC002C52D3 /* Polygon.swift in Sources */,
+				170A922923102AF2007488D1 /* RNEsriRouter.swift in Sources */,
+				170A92272310275A007488D1 /* RNEsriMapView.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				17FDA86D2310978A002C52D3 /* Line.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +641,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4E5A026AA501C43D6DABAE0D /* Pods-appTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -605,6 +665,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FE2D61B37D4E4DC1C6ADDE74 /* Pods-appTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = appTests/Info.plist;
@@ -626,17 +687,23 @@
 			baseConfigurationReference = 39EFA5F7989C776CD8A37636 /* Pods-app.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = V495L9HL69;
 				INFOPLIST_FILE = app/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "br.com.gt4w.react-native-esri";
 				PRODUCT_NAME = app;
+				SWIFT_OBJC_BRIDGING_HEADER = "app-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -646,16 +713,21 @@
 			baseConfigurationReference = 58C27D87AFE41D5BD7BB5E0F /* Pods-app.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V495L9HL69;
 				INFOPLIST_FILE = app/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "br.com.gt4w.react-native-esri";
 				PRODUCT_NAME = app;
+				SWIFT_OBJC_BRIDGING_HEADER = "app-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
