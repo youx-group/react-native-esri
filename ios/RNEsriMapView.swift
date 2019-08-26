@@ -19,7 +19,9 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   
   @objc var initialMapCenter: NSDictionary? {
     didSet{
-      self.setViewpointCenter(<#T##center: AGSPoint##AGSPoint#>, scale: <#T##Double#>, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
+      if let rawData = initialMapCenter {
+        self.setViewpointCenter(AGSPoint(x: rawData["longitude"] as! Double, y: rawData["latitude"] as! Double, spatialReference: .wgs84()), scale: rawData["scale"] as! Double, completion: nil)
+      }
     }
   }
   
@@ -36,7 +38,7 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   
   
   func setUpMap() {
-    self.map = AGSMap(basemapType: .streetsVector, latitude: 0, longitude: 0, levelOfDetail: 1)
+    self.map = AGSMap(basemapType: .streetsVector, latitude: 0, longitude: 0, levelOfDetail: 6)
     
     self.map?.load(completion: {[weak self] (error) in
       if (self?.onMapDidLoad != nil){
@@ -127,8 +129,8 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   @objc func centerMap(_ args: NSDictionary) {
     var point: AGSPoint
     if let latitude = args["latitude"] as? NSNumber, let longitude = args["longitude"] as? NSNumber {
-        point = (AGSPoint(x: longitude.doubleValue, y: latitude.doubleValue, spatialReference: AGSSpatialReference.wgs84()))
-        self.setViewpointCenter(point, completion: nil)
+      point = (AGSPoint(x: longitude.doubleValue, y: latitude.doubleValue, spatialReference: AGSSpatialReference.wgs84()))
+      self.setViewpointCenter(point, completion: nil)
     }
   }
   
