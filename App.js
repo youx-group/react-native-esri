@@ -70,7 +70,7 @@ class App extends React.Component {
         <EsriMapView
           ref={mapView => (this.mapView = mapView)}
           style={{ width: '100%', height: '100%' }}
-          initialMapCenter={{ latitude: 0, longitude: 0, scale: 1000 }}
+          initialMapCenter={{ latitude: -30.30479, longitude: -53.286374, scale: 7 }}
           recenterIfGraphicTapped={true}
           rotationEnabled={false}
           mapBasemap={{ type: 'normal' }}

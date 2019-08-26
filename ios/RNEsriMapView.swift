@@ -16,15 +16,6 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   var routeGraphicsOverlay = AGSGraphicsOverlay()
   var router: RNEsriRouter?
   var bridge: RCTBridge?
-  
-  @objc var initialMapCenter: NSDictionary? {
-    didSet{
-      if let rawData = initialMapCenter {
-        self.setViewpointCenter(AGSPoint(x: rawData["longitude"] as! Double, y: rawData["latitude"] as! Double, spatialReference: .wgs84()), scale: rawData["scale"] as! Double, completion: nil)
-      }
-    }
-  }
-  
   // MARK: Initializers and helper methods
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -35,10 +26,8 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
     setUpMap()
   }
   
-  
-  
   func setUpMap() {
-    self.map = AGSMap(basemapType: .streetsVector, latitude: 0, longitude: 0, levelOfDetail: 6)
+    self.map = AGSMap(basemapType: .streetsVector, latitude: 0, longitude: 0, levelOfDetail: 0)
     
     self.map?.load(completion: {[weak self] (error) in
       if (self?.onMapDidLoad != nil){
@@ -51,6 +40,14 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
     })
     self.touchDelegate = self
     self.graphicsOverlays.add(routeGraphicsOverlay)
+  }
+  
+  @objc var initialMapCenter: NSDictionary? {
+    didSet{
+      if let rawData = initialMapCenter {
+        self.setViewpoint(AGSViewpoint(latitude: rawData["latitude"] as! Double, longitude: rawData["longitude"] as! Double, scale: 1500000 * (rawData["scale"] as! Double)), duration: 2, completion: nil)
+      }
+    }
   }
   
   // MARK: Native methods
