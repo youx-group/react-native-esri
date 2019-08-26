@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import ArcGISMapView from 'react-native-arcgis-mapview'
+import ArcGISMapView from './AGSMapView'
 
 const App = () => {
   return (
