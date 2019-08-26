@@ -16,29 +16,14 @@ public class RNEsriGraphicsOverlay: AGSGraphicsOverlay {
   
   // MARK: Initializer
   init(rawData: NSDictionary){
-    
-    
     guard let referenceIdRaw = rawData["referenceId"] as? NSString else {
       fatalError("The RNAGSGraphicsLayer needs a reference ID.")
-    }
-    
-    guard let rawDataPoints = rawData["points"] as? [NSDictionary] else {
-      fatalError("The RNAGSGraphicsLayer recieved invalid point data: \(rawData)")
-    }
-    
-    guard let rawDataPolygons = rawData["polygons"] as? [NSDictionary] else {
-      fatalError("The RNAGSGraphicsLayer recieved invalid poplygon data: \(rawData)")
-    }
-    
-    guard let rawDataLines = rawData["lines"] as? [NSDictionary] else {
-      fatalError("The RNAGSGraphicsLayer recieved invalid line data: \(rawData)")
     }
     
     referenceId = referenceIdRaw
     pointImageDictionary = [:]
     super.init()
     
-    // Create image assets
     if let pointImagesRaw = rawData["pointGraphics"] as? [NSDictionary] {
       for item in pointImagesRaw {
         if let graphicId = item["graphicId"] as? NSString, let graphic = RCTConvert.uiImage(item["graphic"]) {
@@ -47,22 +32,28 @@ public class RNEsriGraphicsOverlay: AGSGraphicsOverlay {
       }
     }
     
-    for item in rawDataPoints {
-      let point = Point(rawData: item)
-      let agsGraphic = point.toAGSGraphic(pointImageDictionary: pointImageDictionary)
-      self.graphics.add(agsGraphic)
+    if let rawDataPoints = rawData["points"] as? [NSDictionary] {
+      for item in rawDataPoints {
+        let point = Point(rawData: item)
+        let agsGraphic = point.toAGSGraphic(pointImageDictionary: pointImageDictionary)
+        self.graphics.add(agsGraphic)
+      }
     }
     
-    for item in rawDataPolygons {
-      let polygon = Polygon(rawData: item)
-      let agsGraphic = polygon.toAGSGraphic()
-      self.graphics.add(agsGraphic)
+    if let rawDataPolygons = rawData["polygons"] as? [NSDictionary] {
+      for item in rawDataPolygons {
+        let polygon = Polygon(rawData: item)
+        let agsGraphic = polygon.toAGSGraphic()
+        self.graphics.add(agsGraphic)
+      }
     }
     
-    for item in rawDataLines {
-      let line = Line(rawData: item)
-      let agsGraphic = line.toAGSGraphic()
-      self.graphics.add(agsGraphic)
+    if let rawDataLines = rawData["lines"] as? [NSDictionary]{
+      for item in rawDataLines {
+        let line = Line(rawData: item)
+        let agsGraphic = line.toAGSGraphic()
+        self.graphics.add(agsGraphic)
+      }
     }
   }
   
@@ -110,8 +101,6 @@ public class RNEsriGraphicsOverlay: AGSGraphicsOverlay {
     if let attributes = attributes {
       graphic.attributes.addEntries(from: attributes)
     }
-    // End of updates
-    
   }
   
   let timerDuration: Double = 0.5

@@ -34,7 +34,7 @@ class RNEsriMapViewManager: RCTViewManager {
     }
   }
   
-  @objc func centerMapViaManager(_ node: NSNumber, args: NSArray) {
+  @objc func centerMapViaManager(_ node: NSNumber, args: NSDictionary) {
     DispatchQueue.main.async {
       let component = self.bridge.uiManager.view(forReactTag: node) as! RNEsriMapView
       component.centerMap(args)

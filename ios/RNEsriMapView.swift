@@ -17,6 +17,12 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   var router: RNEsriRouter?
   var bridge: RCTBridge?
   
+  @objc var initialMapCenter: NSDictionary? {
+    didSet{
+      self.setViewpointCenter(<#T##center: AGSPoint##AGSPoint#>, scale: <#T##Double#>, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
+    }
+  }
+  
   // MARK: Initializers and helper methods
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -27,9 +33,10 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
     setUpMap()
   }
   
+  
+  
   func setUpMap() {
-    // Default is to Esri HQ
-    self.map = AGSMap(basemapType: .streetsVector, latitude: 34.057, longitude: -117.196, levelOfDetail: 17)
+    self.map = AGSMap(basemapType: .streetsVector, latitude: 0, longitude: 0, levelOfDetail: 1)
     
     self.map?.load(completion: {[weak self] (error) in
       if (self?.onMapDidLoad != nil){
@@ -117,22 +124,11 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
     }
   }
   
-  @objc func centerMap(_ args: NSArray) {
-    var points = [AGSPoint]()
-    if let argsCasted = args as? [NSDictionary] {
-      for rawPoint in argsCasted {
-        if let latitude = rawPoint["latitude"] as? NSNumber, let longitude = rawPoint["longitude"] as? NSNumber {
-          points.append(AGSPoint(x: longitude.doubleValue, y: latitude.doubleValue, spatialReference: AGSSpatialReference.wgs84()))
-        }
-      }
-    }
-    if (points.count == 0){
-      print("WARNING: Recenter point array was empty or contained invalid data.")
-    } else if points.count == 1 {
-      self.setViewpointCenter(points.first!, completion: nil)
-    } else {
-      let polygon = AGSPolygon(points: points)
-      self.setViewpointGeometry(polygon, padding: 50, completion: nil)
+  @objc func centerMap(_ args: NSDictionary) {
+    var point: AGSPoint
+    if let latitude = args["latitude"] as? NSNumber, let longitude = args["longitude"] as? NSNumber {
+        point = (AGSPoint(x: longitude.doubleValue, y: latitude.doubleValue, spatialReference: AGSSpatialReference.wgs84()))
+        self.setViewpointCenter(point, completion: nil)
     }
   }
   
@@ -296,31 +292,6 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
       }
     }
   }
-  
-  @objc var initialMapCenter: NSArray? {
-    didSet{
-      var points = [AGSPoint]()
-      if let initialMapCenter = initialMapCenter as? [NSDictionary] {
-        for rawPoint in initialMapCenter {
-          if let latitude = rawPoint["latitude"] as? NSNumber, let longitude = rawPoint["longitude"] as? NSNumber {
-            points.append(AGSPoint(x: longitude.doubleValue, y: latitude.doubleValue, spatialReference: AGSSpatialReference.wgs84()))
-          } // end if let
-        }// end for loop
-      } // end initialmapcenter nil check
-      // If no points exist, add a sample point
-      if points.count == 0 {
-        points.append(AGSPoint(x: 36.244797, y: -94.148060, spatialReference: AGSSpatialReference.wgs84()))
-      }
-      if points.count == 1 {
-        let viewpoint = AGSViewpoint(center: points.first!, scale: 10000)
-        self.map?.initialViewpoint = viewpoint
-      } else {
-        let polygon = AGSPolygon(points: points)
-        self.setViewpointGeometry(polygon, padding: 50, completion: nil)
-      }
-      
-    }// end didSet
-  }// end initialMapCenter declaration
   
   @objc var minZoom:NSNumber = 0 {
     didSet{

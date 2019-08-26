@@ -2,14 +2,14 @@ import React from 'react';
 import { Image, View } from 'react-native';
 import EsriMapView, { setLicenseKey } from './EsriMapView';
 
-const graphics = {
+const overlay1 = {
+  referenceId: 'overlay1',
   pointGraphics: [
     {
       graphicId: 'point',
       graphic: Image.resolveAssetSource(require('./marker.png'))
     }
   ],
-  referenceId: 'graphicsOverlay',
   points: [
     {
       latitude: 45.51223,
@@ -62,7 +62,7 @@ class App extends React.Component {
     setLicenseKey('');
   }
   componentDidMount() {
-    this.mapView.addGraphicsOverlay(graphics);
+    this.mapView.addGraphicsOverlay(overlay1);
   }
   render() {
     return (
@@ -70,7 +70,7 @@ class App extends React.Component {
         <EsriMapView
           ref={mapView => (this.mapView = mapView)}
           style={{ width: '100%', height: '100%' }}
-          initialMapCenter={[{ latitude: 34.055561, longitude: -117.182602 }]}
+          initialMapCenter={{ latitude: 34.055561, longitude: -117.182602, scale: 7 }}
           recenterIfGraphicTapped={true}
           rotationEnabled={false}
           mapBasemap={{ type: 'normal' }}
