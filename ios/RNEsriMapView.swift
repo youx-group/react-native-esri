@@ -124,10 +124,15 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   }
   
   @objc func centerMap(_ args: NSDictionary) {
-    var point: AGSPoint
-    if let latitude = args["latitude"] as? NSNumber, let longitude = args["longitude"] as? NSNumber {
-      point = (AGSPoint(x: longitude.doubleValue, y: latitude.doubleValue, spatialReference: AGSSpatialReference.wgs84()))
-      self.setViewpointCenter(point, completion: nil)
+    if let latitude = args["latitude"] as! Double?, let longitude = args["longitude"] as! Double?
+    {
+      if let scale = args["scale"] as! Double?, let duration = args["duration"] as! Double?{
+        self.setViewpoint(AGSViewpoint(latitude: latitude, longitude: longitude, scale: 1500000 * (scale)), duration: duration, completion: nil)
+      }
+      else
+      {
+        self.setViewpointCenter(AGSPoint(x: latitude, y: longitude, spatialReference: AGSSpatialReference.wgs84()), completion: nil)
+      }
     }
   }
   
@@ -137,72 +142,6 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
     if (onOverlayWasAdded != nil) {
       onOverlayWasAdded!([NSString(string: "referenceId"): rnRawGraphicsOverlay.referenceId]);
     }
-  }
-  
-  @objc func addPointsToGraphicsOverlay(_ args: NSDictionary) {
-    guard let name = args["overlayReferenceId"] as? NSString,  let overlay = getOverlay(byReferenceId: name) else {
-      print("WARNING: Invalid layer name entered. No points will be added.")
-      reportToOverlayDidLoadListener(referenceId: args["overlayReferenceId"] as? NSString ?? NSString(string:"unknown"), action: "add", success: false, errorMessage: "Invalid layer name entered.")
-      return
-    }
-    guard let rawPointsCasted = args["points"] as? [NSDictionary] else {
-      print("WARNING: No reference IDs provided. No points will be added.")
-      reportToOverlayDidLoadListener(referenceId: name, action: "add", success: false, errorMessage: "No reference IDs provided.")
-      
-      return
-    }
-    // Create point image dictionary
-    var pointImageDictionary: [NSString: UIImage] = [:]
-    if let pointGraphics = args["pointGraphics"] as? [NSDictionary] {
-      for item in pointGraphics {
-        if let graphicId = item["graphicId"] as? NSString, let graphic = RCTConvert.uiImage(item["graphic"]) {
-          pointImageDictionary[graphicId] = graphic
-        }
-      }
-    }
-    for item in rawPointsCasted {
-      let point = Point(rawData: item)
-      let graphic = point.toAGSGraphic(pointImageDictionary: pointImageDictionary)
-      overlay.graphics.add(graphic)
-      
-    }
-    reportToOverlayDidLoadListener(referenceId: name, action: "add", success: true, errorMessage: nil)
-  }
-  
-  @objc func removePointsFromGraphicsOverlay(_ args: NSDictionary) {
-    guard let name = args["overlayReferenceId"] as? NSString,  let overlay = getOverlay(byReferenceId: name) else {
-      print("WARNING: Invalid layer name entered. No points will be removed.")
-      reportToOverlayDidLoadListener(referenceId: args["overlayReferenceId"] as? NSString ?? NSString(string:"unknown"), action: "remove", success: false, errorMessage: "Invalid layer name entered.")
-      return
-    }
-    guard let pointsToRemove = args["referenceIds"] as? [NSString] else {
-      print("WARNING: No reference IDs provided. No points will be removed.")
-      reportToOverlayDidLoadListener(referenceId: name, action: "remove", success: false, errorMessage: "No reference IDs provided.")
-      return
-    }
-    for graphic in overlay.graphics as! [AGSGraphic] {
-      let id = graphic.attributes["referenceId"] as! NSString
-      if pointsToRemove.contains(id) {
-        overlay.graphics.remove(graphic)
-      }
-    }
-    reportToOverlayDidLoadListener(referenceId: name, action: "remove", success: true, errorMessage: nil)
-  }
-  
-  @objc func updatePointsInGraphicsOverlay(_ args: NSDictionary) {
-    guard let name = args["overlayReferenceId"] as? NSString,  let overlay = getOverlay(byReferenceId: name) else  {
-      print("WARNING: Invalid layer name entered. No points will be modified.")
-      reportToOverlayDidLoadListener(referenceId: args["overlayReferenceId"] as? NSString ?? NSString(string: "Unknown"), action: "update", success: false, errorMessage: "Invalid layer name entered.")
-      return
-    }
-    let shouldAnimateUpdate = (args["animated"] as? Bool) ?? false
-    overlay.shouldAnimateUpdate = shouldAnimateUpdate
-    if let updates = args["updates"] as? [NSDictionary] {
-      for update in updates {
-        overlay.updateGraphic(with: update)
-      }
-    }
-    reportToOverlayDidLoadListener(referenceId: args["overlayReferenceId"] as! NSString, action: "update", success: true, errorMessage: nil)
   }
   
   @objc func removeGraphicsOverlay(_ name: NSString) {

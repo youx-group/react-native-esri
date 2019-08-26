@@ -48,31 +48,10 @@ class RNEsriMapViewManager: RCTViewManager {
     }
   }
   
-  @objc func addPointsToOverlayViaManager(_ node: NSNumber, args: NSDictionary) {
-    DispatchQueue.main.async {
-      let component = self.bridge.uiManager.view(forReactTag: node) as! RNEsriMapView
-      component.addPointsToGraphicsOverlay(args)
-    }
-  }
-  
-  @objc func removePointsFromOverlayViaManager(_ node: NSNumber, args: NSDictionary) {
-    DispatchQueue.main.async {
-      let component = self.bridge.uiManager.view(forReactTag: node) as! RNEsriMapView
-      component.removePointsFromGraphicsOverlay(args)
-    }
-  }
-  
   @objc func removeGraphicsOverlayViaManager(_ node: NSNumber, args: NSString) {
     DispatchQueue.main.async {
       let component = self.bridge.uiManager.view(forReactTag: node) as! RNEsriMapView
       component.removeGraphicsOverlay(args)
-    }
-  }
-  
-  @objc func updatePointsInGraphicsOverlayViaManager(_ node: NSNumber, args: NSDictionary) {
-    DispatchQueue.main.async {
-      let component = self.bridge.uiManager.view(forReactTag: node) as! RNEsriMapView
-      component.updatePointsInGraphicsOverlay(args)
     }
   }
   

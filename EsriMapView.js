@@ -90,31 +90,6 @@ class RNEsriMapView extends React.Component {
     );
   };
 
-  addPointsToOverlay = args => {
-    UIManager.dispatchViewManagerCommand(
-      findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands.addPointsToOverlayViaManager,
-      [args]
-    );
-  };
-
-  updatePointsOnOverlay = args => {
-    UIManager.dispatchViewManagerCommand(
-      findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands
-        .updatePointsInGraphicsOverlayViaManager,
-      [args]
-    );
-  };
-
-  removePointsFromOverlay = args => {
-    UIManager.dispatchViewManagerCommand(
-      findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands.removePointsFromOverlayViaManager,
-      [args]
-    );
-  };
-
   routeGraphicsOverlay = args => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),

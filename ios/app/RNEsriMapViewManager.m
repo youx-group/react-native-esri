@@ -32,10 +32,6 @@ RCT_EXTERN_METHOD(centerMapViaManager:(nonnull NSNumber*)node args:(NSDictionary
 RCT_EXTERN_METHOD(addGraphicsOverlayViaManager:(nonnull NSNumber*) node args:(NSDictionary*)args)
 RCT_EXTERN_METHOD(removeGraphicsOverlayViaManager:(nonnull NSNumber*) node args:(NSString*) args)
 
-RCT_EXTERN_METHOD(addPointsToOverlayViaManager:(nonnull NSNumber*) node args:(NSDictionary*)args)
-RCT_EXTERN_METHOD(removePointsFromOverlayViaManager:(nonnull NSNumber*) node args:(NSDictionary*)args)
-RCT_EXTERN_METHOD(updatePointsInGraphicsOverlayViaManager:(nonnull NSNumber*) node args:(NSDictionary*)args)
-
 RCT_EXTERN_METHOD(routeGraphicsOverlayViaManager:(nonnull NSNumber*) node args:(NSDictionary*)args)
 RCT_EXTERN_METHOD(routeIsShowing:(nonnull NSNumber*) node callback: (RCTResponseSenderBlock*)callback)
 RCT_EXTERN_METHOD(setRouteIsVisibleViaManager:(nonnull NSNumber*) node args:(BOOL*) args)
