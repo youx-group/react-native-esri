@@ -11,6 +11,8 @@ import Foundation
 import UIColor_Hex_Swift
 
 class RNEsriFeatureLayer: AGSFeatureLayer {
+  let referenceId: NSString
+  
   init(rawData: NSDictionary) {
     if let url = rawData["url"] as! String?
     {
@@ -33,10 +35,20 @@ class RNEsriFeatureLayer: AGSFeatureLayer {
       
       let featureTable = AGSServiceFeatureTable(url: URL(string: url)!)
       featureTable.featureRequestMode = AGSFeatureRequestMode.onInteractionCache
-      
       let simpleRenderer : AGSSimpleRenderer = AGSSimpleRenderer(symbol: simpleFillSymbol);
+      
+      if let referenceIdRaw = rawData["referenceId"] as? NSString
+      {
+         self.referenceId = referenceIdRaw
+      }
+      else
+      {
+        fatalError("Invalid referenceId for feature layer!")
+      }
+     
       super.init(featureTable: featureTable)
       self.renderer = simpleRenderer
+      
     }
     else
     {

@@ -13,6 +13,18 @@ import UIColor_Hex_Swift
 
 @objc(RNEsriMapView)
 public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
+  @objc var onSingleTap: RCTDirectEventBlock?
+  @objc var onMapDidLoad: RCTDirectEventBlock?
+  @objc var onMapMoved: RCTDirectEventBlock?
+  
+  @objc var onOverlayWasModified: RCTDirectEventBlock?
+  @objc var onOverlayWasAdded: RCTDirectEventBlock?
+  @objc var onOverlayWasRemoved: RCTDirectEventBlock?
+  
+  @objc var onFeatureLayerWasAdded: RCTDirectEventBlock?
+  @objc var onFeatureLayerWasRemoved: RCTDirectEventBlock?
+  
+  
   var routeGraphicsOverlay = AGSGraphicsOverlay()
   var router: RNEsriRouter?
   var bridge: RCTBridge?
@@ -96,14 +108,6 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
     }
   }
   
-  // MARK: Exposed RN Event Emitters
-  @objc var onSingleTap: RCTDirectEventBlock?
-  @objc var onMapDidLoad: RCTDirectEventBlock?
-  @objc var onOverlayWasModified: RCTDirectEventBlock?
-  @objc var onOverlayWasAdded: RCTDirectEventBlock?
-  @objc var onOverlayWasRemoved: RCTDirectEventBlock?
-  @objc var onMapMoved: RCTDirectEventBlock?
-  
   // MARK: Exposed RN methods
   @objc func showCallout(_ args: NSDictionary) {
     let point = args["point"] as? NSDictionary
@@ -142,6 +146,20 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   @objc func addFeatureLayer(_ args: NSDictionary) {
     let rnFeatureLayer = RNEsriFeatureLayer(rawData: args)
     self.map!.operationalLayers.add(rnFeatureLayer)
+    if (onFeatureLayerWasAdded != nil) {
+      onFeatureLayerWasAdded!([NSString(string: "referenceId"): rnFeatureLayer.referenceId]);
+    }
+  }
+  
+  @objc func removeFeatureLayer(_ name: NSString) {
+    guard let overlay = getFeatureLayer(named: name) else {
+      print("WARNING: Invalid feature layer name entered. No overlay will be removed.")
+      return
+    }
+    self.map!.operationalLayers.remove(overlay)
+    if (onFeatureLayerWasRemoved != nil) {
+      onFeatureLayerWasRemoved!([NSString(string: "referenceId"): name])
+    }
   }
   
   @objc func addGraphicsOverlay(_ args: NSDictionary) {
@@ -283,6 +301,16 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
       onOverlayWasModified!(reactResult)
     }
   }
+  
+  private func getFeatureLayer(named name:NSString) -> RNEsriFeatureLayer? {
+    return self.map!.operationalLayers.first(where: { (item) -> Bool in
+      guard let item = item as? RNEsriFeatureLayer else {
+        return false
+      }
+      return item.referenceId == name
+    }) as? RNEsriFeatureLayer
+  }
+  
   private func getOverlay(named name: NSString) -> RNEsriGraphicsOverlay?{
     return self.graphicsOverlays.first(where: { (item) -> Bool in
       guard let item = item as? RNEsriGraphicsOverlay else {

@@ -20,17 +20,24 @@ RCT_EXPORT_VIEW_PROPERTY(maxZoom, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(rotationEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(onSingleTap, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onMapDidLoad, RCTDirectEventBlock)
+
 RCT_EXPORT_VIEW_PROPERTY(onOverlayWasModified, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onOverlayWasAdded, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onOverlayWasRemoved, RCTDirectEventBlock)
+
+RCT_EXPORT_VIEW_PROPERTY(onFeatureLayerWasAdded, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onFeatureLayerWasRemoved, RCTDirectEventBlock)
+
 RCT_EXPORT_VIEW_PROPERTY(onMapMoved, RCTDirectEventBlock)
 
 
 // MARK: External method exports (these can be called from react via a reference)
-RCT_EXTERN_METHOD(addFeatureLayerViaManager:(nonnull NSNumber*)node args:(NSDictionary*)args)
+RCT_EXTERN_METHOD(addFeatureLayerViaManager:(nonnull NSNumber*) node args:(NSDictionary*)args)
+RCT_EXTERN_METHOD(removeFeatureLayerViaManager:(nonnull NSNumber*) node args:(NSString*) args)
 
 RCT_EXTERN_METHOD(showCalloutViaManager:(nonnull NSNumber*)node args:(NSDictionary*)args)
 RCT_EXTERN_METHOD(centerMapViaManager:(nonnull NSNumber*)node args:(NSDictionary*)args)
+
 RCT_EXTERN_METHOD(addGraphicsOverlayViaManager:(nonnull NSNumber*) node args:(NSDictionary*)args)
 RCT_EXTERN_METHOD(removeGraphicsOverlayViaManager:(nonnull NSNumber*) node args:(NSString*) args)
 

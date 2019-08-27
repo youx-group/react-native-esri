@@ -29,6 +29,7 @@ class RNEsriMapView extends React.Component {
     initialMapCenter: PropTypes.object,
 
     addFeatureLayer: PropTypes.string,
+    removeFeatureLayer: PropTypes.string,
 
     addGraphicsOverlay: PropTypes.object,
     removeGraphicsOverlay: PropTypes.string,
@@ -88,6 +89,14 @@ class RNEsriMapView extends React.Component {
       findNodeHandle(this.agsMapRef),
       UIManager.getViewManagerConfig('RNEsriMapView').Commands.addFeatureLayerViaManager,
       [featureURL]
+    );
+  };
+
+  removeFeatureLayer = featureId => {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this.agsMapRef),
+      UIManager.getViewManagerConfig('RNEsriMapView').Commands.removeFeatureLayerViaManager,
+      [featureId]
     );
   };
 
