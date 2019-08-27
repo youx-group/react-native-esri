@@ -6,13 +6,13 @@
   <img src="react-native-esri.png">
 </p>
 
-### Current features include:
+## Current features include:
 
 - Render `polygon`s, `line`s and `marker`s with custom assets and properties
 - Render `featureLayer`s from web servicewith custom properties
 - Customize fills and outlines color of rendered objects
 
-### Functions
+## Available Functions:
 
 ```
 addFeatureLayer(
@@ -45,7 +45,7 @@ addGraphicsOverlay(
 removeGraphicsOverlay(<id>)
 ```
 
-#### Where:
+### Where:
 
 - **url**: a string pointing to a web service that retrieves a compatible ArcGIS feature layer.
 - **color**: a hexadecimal color string to set correspondent element color
@@ -118,3 +118,7 @@ polygons: [
   }
 ]
 ```
+
+# License
+
+_ArcGIS SDK for Android/iOS and the ArcGIS logo are properties of [Esri](https://developers.arcgis.com/) 2019, all rights reserved._
