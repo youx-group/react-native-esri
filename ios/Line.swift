@@ -26,7 +26,7 @@ public class Line{
       _points.append(Point(rawData: rawDataPoint).toAGSPoint())
     }
     self.points = _points
-    self.outline = UIColor(rawData["outline"] as! String)
+    self.outline = UIColor(rawData["outlineColor"] as! String)
   }
   
   func toAGSPolyline() -> AGSPolyline{

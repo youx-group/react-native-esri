@@ -19,14 +19,14 @@ class RNEsriFeatureLayer: AGSFeatureLayer {
       let initialLineSymbol : AGSSimpleLineSymbol = AGSSimpleLineSymbol(style: AGSSimpleLineSymbolStyle.null, color: UIColor("#000000"), width: 1.0)
       let simpleFillSymbol : AGSSimpleFillSymbol = AGSSimpleFillSymbol(style: AGSSimpleFillSymbolStyle.null, color: UIColor("#000000"), outline: initialLineSymbol)
       
-      if let outline = rawData["outline"] as? String
+      if let outline = rawData["outlineColor"] as? String
       {
         let outlineColor : UIColor = UIColor(outline)
         let lineSymbol : AGSSimpleLineSymbol = AGSSimpleLineSymbol(style: AGSSimpleLineSymbolStyle.solid, color: outlineColor, width: 1.0)
         simpleFillSymbol.outline = lineSymbol
       }
       
-      if let fill = rawData["fill"] as? String
+      if let fill = rawData["fillColor"] as? String
       {
         let fillColor : UIColor = UIColor(fill)
         simpleFillSymbol.style = AGSSimpleFillSymbolStyle.solid
