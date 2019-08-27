@@ -121,4 +121,4 @@ polygons: [
 
 # License
 
-_ArcGIS SDK for Android/iOS and the ArcGIS logo are properties of [Esri](https://developers.arcgis.com/) 2019, all rights reserved._
+_The ArcGIS SDK for Android/iOS and the ArcGIS logo are properties of [Esri](https://developers.arcgis.com/) 2019, all rights reserved._
