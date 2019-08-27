@@ -27,20 +27,29 @@ class RNEsriMapView extends React.Component {
   static propTypes = {
     basemapUrl: PropTypes.string,
     initialMapCenter: PropTypes.object,
+
+    addFeatureLayer: PropTypes.string,
+
+    addGraphicsOverlay: PropTypes.object,
+    removeGraphicsOverlay: PropTypes.string,
+
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
+
     rotationEnabled: PropTypes.bool,
     routeUrl: PropTypes.string,
+
     onOverlayWasAdded: PropTypes.func,
     onOverlayWasRemoved: PropTypes.func,
     onOverlayWasModified: PropTypes.func,
+
     onMapDidLoad: PropTypes.func,
     onMapMoved: PropTypes.func,
     onSingleTap: PropTypes.func
   };
 
   static defaultProps = {
-    initialMapCenter: [{ latitude: 36.244797, longitude: -94.14806 }],
+    initialMapCenter: [{ latitude: 0, longitude: 0 }],
     minZoom: 0,
     maxZoom: 0,
     rotationEnabled: true,
@@ -71,6 +80,14 @@ class RNEsriMapView extends React.Component {
       findNodeHandle(this.agsMapRef),
       UIManager.getViewManagerConfig('RNEsriMapView').Commands.centerMapViaManager,
       [pointArray]
+    );
+  };
+
+  addFeatureLayer = featureURL => {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this.agsMapRef),
+      UIManager.getViewManagerConfig('RNEsriMapView').Commands.addFeatureLayerViaManager,
+      [featureURL]
     );
   };
 

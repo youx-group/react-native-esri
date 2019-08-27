@@ -27,7 +27,7 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   }
   
   func setUpMap() {
-    self.map = AGSMap(basemapType: .streetsVector, latitude: 0, longitude: 0, levelOfDetail: 0)
+    self.map = AGSMap(basemapType: .streetsNightVector, latitude: 0, longitude: 0, levelOfDetail: 0)
     
     self.map?.load(completion: {[weak self] (error) in
       if (self?.onMapDidLoad != nil){
@@ -52,6 +52,7 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   
   // MARK: Native methods
   @objc public func geoView(_ geoView: AGSGeoView, didTapAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
+    
     self.callout.dismiss()
     if onSingleTap != nil {
       let latLongPoint = AGSGeometryEngine.projectGeometry(mapPoint, to: AGSSpatialReference.wgs84()) as! AGSPoint
@@ -70,11 +71,13 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
           self?.onSingleTap!(reactResult)
           return
         }
+        
         for item in result {
-          if item.graphicsOverlay is RNEsriGraphicsOverlay, let closestGraphic = item.graphics.first, let referenceId = closestGraphic.attributes["referenceId"] as? NSString{
-            reactResult["graphicReferenceId"] = referenceId
+          if item.graphicsOverlay is RNEsriGraphicsOverlay, let closestGraphic = item.graphics.first
+          {
             if self?.recenterIfGraphicTapped ?? false {
               self?.setViewpointCenter(mapPoint, completion: nil)
+
             }
           }
         }
@@ -134,6 +137,11 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
         self.setViewpointCenter(AGSPoint(x: latitude, y: longitude, spatialReference: AGSSpatialReference.wgs84()), completion: nil)
       }
     }
+  }
+  
+  @objc func addFeatureLayer(_ args: NSString) {
+    let rnFeatureLayer = RNEsriFeatureLayer(url:args as String)
+    self.map!.operationalLayers.add(rnFeatureLayer)
   }
   
   @objc func addGraphicsOverlay(_ args: NSDictionary) {
