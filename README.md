@@ -1,6 +1,6 @@
-# react-native-esri
+# **react-native-esri**
 
-## ⚡ React Native performance-focused map component for iOS and Android built around Swift and Java Esri's ArcGIS SDKs.
+### _⚡ A React Native performance-focused map component for iOS and Android built around Swift and Java Esri's ArcGIS SDKs._
 
 <p align="center">
   <img src="react-native-esri.png">
@@ -12,4 +12,19 @@
 - Render `featureLayer`s from web servicewith custom properties
 - Customize fills and outlines color of rendered objects
 
-### Examples
+### Functions
+
+```
+addFeatureLayer: { url: <url>, outlineColor: <color>, fillColor: <color>, referenceId: <id> }
+removeFeatureLayer: <id>,
+
+addGraphicsOverlay: [{ referenceId?: <id>, points?: <point>, lines?: <line?>, polygons?: <polygon> }]
+removeGraphicsOverlay: <id>,
+```
+
+Where:
+
+- url: a string pointing to a web service that retrieves a compatible ArcGIS feature layer.
+- outlineColor: a hexadecimal color string to set outline color of element
+- fillColor: a hexadecimal color string to set fill color of element
+- id: a string to reference elements during lifecycle
