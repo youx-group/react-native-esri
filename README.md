@@ -1,6 +1,6 @@
 # **react-native-esri**
 
-### _⚡ A React Native performance-focused map component for iOS and Android built around Swift and Java Esri's ArcGIS SDKs._
+## _⚡ A React Native performance-focused map component for iOS and Android built around Swift and Java Esri's ArcGIS SDKs._
 
 <p align="center">
   <img src="react-native-esri.png">
@@ -42,10 +42,10 @@ addGraphicsOverlay(
 ```
 
 ```
-removeGraphicsOverlay(<id>),
+removeGraphicsOverlay(<id>)
 ```
 
-Where:
+#### Where:
 
 - **url**: a string pointing to a web service that retrieves a compatible ArcGIS feature layer.
 - **color**: a hexadecimal color string to set correspondent element color
