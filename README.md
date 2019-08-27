@@ -48,7 +48,7 @@ removeGraphicsOverlay(<id>),
 Where:
 
 - **url**: a string pointing to a web service that retrieves a compatible ArcGIS feature layer.
-- **color**: a hexadecimal color string to set fill color of element
+- **color**: a hexadecimal color string to set correspondent element color
 - **id**: a string to reference elements during lifecycle
 - **pointGraphics**: an array used to define available marker graphics, containing the following fields:
 
