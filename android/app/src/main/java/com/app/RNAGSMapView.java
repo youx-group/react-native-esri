@@ -29,7 +29,10 @@ import com.esri.arcgisruntime.mapping.view.Graphic;
 import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import com.esri.arcgisruntime.mapping.view.IdentifyGraphicsOverlayResult;
 import com.esri.arcgisruntime.mapping.view.MapView;
+import com.esri.arcgisruntime.symbology.LineSymbol;
+import com.esri.arcgisruntime.symbology.SimpleFillSymbol;
 import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
+import com.esri.arcgisruntime.symbology.SimpleRenderer;
 import com.esri.arcgisruntime.tasks.networkanalysis.Route;
 import com.esri.arcgisruntime.tasks.networkanalysis.RouteResult;
 import com.facebook.react.bridge.Arguments;
@@ -148,6 +151,8 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
         Double latitude = item.getDouble("latitude");
         Double longitude = item.getDouble("longitude");
         Integer initialZoom = item.getInt("initialZoom");
+        Boolean fill = item.getBoolean("fill");
+
 
         ArcGISMap initialMap = new ArcGISMap(Basemap.Type.STREETS_VECTOR, latitude, longitude, initialZoom);
 
@@ -155,8 +160,25 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
         // create the service feature table
         ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(
                 "http://sistemas.gt4w.com.br/arcgis/rest/services/rs/MunicipiosRS/MapServer/0/");
+
         // create the feature layer using the service feature table
         FeatureLayer featureLayer = new FeatureLayer(serviceFeatureTable);
+
+        // determine if the map will be filled or not
+        if(!fill) {
+            // Set the style, color e width of the outline
+            // Can be style the way you want
+            SimpleLineSymbol lineSymbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLACK, 1.0f);
+
+            // Remove the filler of the map
+            // Can be change, to another types of filler
+            SimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.NULL, 0xFFD3D3D3, lineSymbol);
+
+            // Set the style to the featureLayer
+            SimpleRenderer sr = new SimpleRenderer(simpleFillSymbol);
+            featureLayer.setRenderer(sr);
+        }
+
         // add the layer to the map
         initialMap.getOperationalLayers().add(featureLayer);
 
