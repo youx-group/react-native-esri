@@ -3,6 +3,7 @@ package com.app;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.system.ErrnoException;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,8 +42,11 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.devsupport.interfaces.ErrorCustomizer;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
+
+import org.xml.sax.ErrorHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -151,36 +155,8 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
         Double latitude = item.getDouble("latitude");
         Double longitude = item.getDouble("longitude");
         Integer initialZoom = item.getInt("initialZoom");
-        Boolean fill = item.getBoolean("fill");
-
 
         ArcGISMap initialMap = new ArcGISMap(Basemap.Type.STREETS_VECTOR, latitude, longitude, initialZoom);
-
-        // create feature layer with its service feature table
-        // create the service feature table
-        ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(
-                "http://sistemas.gt4w.com.br/arcgis/rest/services/rs/estado_rs/MapServer/0/");
-
-        // create the feature layer using the service feature table
-        FeatureLayer featureLayer = new FeatureLayer(serviceFeatureTable);
-
-        // determine if the map will be filled or not
-        if(!fill) {
-            // Set the style, color e width of the outline
-            // Can be style the way you want
-            SimpleLineSymbol lineSymbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLACK, 1.0f);
-
-            // Remove the filler of the map
-            // Can be change, to another types of filler
-            SimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.NULL, 0xFFD3D3D3, lineSymbol);
-
-            // Set the style to the featureLayer
-            SimpleRenderer sr = new SimpleRenderer(simpleFillSymbol);
-            featureLayer.setRenderer(sr);
-        }
-
-        // add the layer to the map
-        initialMap.getOperationalLayers().add(featureLayer);
 
         mapView.setMap(initialMap);
     }
@@ -265,20 +241,20 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
     }
 
     public void addFeatureLayer(ReadableMap args) {
-        String layerUrl;
+        ArcGISMap map = mapView.getMap();
 
         if(args == null) {
             return;
         }
 
-        layerUrl = args.getString("url");
-        RNEsriFeatureLayer rnEsriFeatureLayer = new RNEsriFeatureLayer(layerUrl);
+        if (!args.hasKey("url")) {
+            Log.w("Warning (AGS)", "Must provide a url for the feature layer.");
+            throw new RuntimeException("Must provide a url for the feature layer.");
+        }
 
-        // create the feature layer using the service feature table
-        FeatureLayer featureLayer = new FeatureLayer(rnEsriFeatureLayer.setFeatureTable(layerUrl));
+        RNEsriFeatureLayer rnEsriFeatureLayer = new RNEsriFeatureLayer();
 
-        ArcGISMap map = mapView.getMap();
-        map.getOperationalLayers().add(featureLayer);
+        map.getOperationalLayers().add(rnEsriFeatureLayer.setFeatureLayer(args));
         mapView.setMap(map);
 
     }

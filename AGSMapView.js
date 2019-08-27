@@ -32,13 +32,12 @@ class ArcGISMapView extends React.Component {
     onMapDidLoad: PropTypes.func,
     onMapMoved: PropTypes.func,
     onSingleTap: PropTypes.func,
-    addFeatureLayer: PropTypes.string,
-
+    addFeatureLayer: PropTypes.arrayOf(PropTypes.object),
   };
 
   static defaultProps = {
     initialMapCenter: [
-      { latitude: -30.304790, longitude: -53.286374, fill: true }
+      { latitude: -30.304790, longitude: -53.286374 }
     ],
     minZoom: 0,
     maxZoom: 0,
@@ -52,6 +51,11 @@ class ArcGISMapView extends React.Component {
     onMapMoved: () => { },
     onRoutingStatusUpdate: () => { },
     routeUrl: '',
+    addFeatureLayer: [{
+      url: '',
+      outlineColor: '',
+      fillColor: ''
+    }]
   };
 
   isRouting = false;

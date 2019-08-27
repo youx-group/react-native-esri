@@ -37,7 +37,7 @@ class App extends React.Component {
     }
 
     this.mapView.addGraphicsOverlay(overlay);
-
+    this.mapView.addFeatureLayer(url)
   }
 
   render() {
@@ -65,6 +65,7 @@ class App extends React.Component {
 
 const url = {
   url: 'http://sistemas.gt4w.com.br/arcgis/rest/services/rs/MunicipiosRS/MapServer/0/',
+  outlineColor: '#000000',
 }
 
 export default App;
