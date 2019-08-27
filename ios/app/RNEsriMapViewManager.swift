@@ -48,7 +48,7 @@ class RNEsriMapViewManager: RCTViewManager {
     }
   }
 
-  @objc func removeFeatureLayerviaManager(_ node: NSNumber, args: NSString){
+  @objc func removeFeatureLayerViaManager(_ node: NSNumber, args: NSString){
     DispatchQueue.main.async {
       let component = self.bridge.uiManager.view(forReactTag: node) as! RNEsriMapView
       component.removeFeatureLayer(args)

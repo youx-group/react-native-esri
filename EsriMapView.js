@@ -28,7 +28,7 @@ class RNEsriMapView extends React.Component {
     basemapUrl: PropTypes.string,
     initialMapCenter: PropTypes.object,
 
-    addFeatureLayer: PropTypes.string,
+    addFeatureLayer: PropTypes.object,
     removeFeatureLayer: PropTypes.string,
 
     addGraphicsOverlay: PropTypes.object,
@@ -84,11 +84,11 @@ class RNEsriMapView extends React.Component {
     );
   };
 
-  addFeatureLayer = featureURL => {
+  addFeatureLayer = featureData => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
       UIManager.getViewManagerConfig('RNEsriMapView').Commands.addFeatureLayerViaManager,
-      [featureURL]
+      [featureData]
     );
   };
 

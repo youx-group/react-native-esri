@@ -87,14 +87,11 @@ const App = () => {
             title='overlay1'
             onPress={() => {
               if (!overlay1State) {
-                if (!overlay2State) {
-                  mapView.addGraphicsOverlay(overlay1);
-                } else {
-                  mapView.addGraphicsOverlay(overlay1);
-                  mapView.removeGraphicsOverlay('overlay2');
-                }
+                mapView.addGraphicsOverlay(overlay1);
                 setOverlay1State(true);
-                setOverlay2State(false);
+              } else {
+                mapView.removeGraphicsOverlay('overlay1');
+                setOverlay1State(false);
               }
             }}
           ></Button>
@@ -102,14 +99,11 @@ const App = () => {
             title='overlay2'
             onPress={() => {
               if (!overlay2State) {
-                if (!overlay1State) {
-                  mapView.addGraphicsOverlay(overlay2);
-                } else {
-                  mapView.addGraphicsOverlay(overlay2);
-                  mapView.removeGraphicsOverlay('overlay1');
-                }
-                setOverlay1State(false);
+                mapView.addGraphicsOverlay(overlay2);
                 setOverlay2State(true);
+              } else {
+                mapView.removeGraphicsOverlay('overlay2');
+                setOverlay2State(false);
               }
             }}
           ></Button>
@@ -125,6 +119,9 @@ const App = () => {
                   referenceId: 'layer1'
                 });
                 setFeatureState(true);
+              } else {
+                mapView.removeFeatureLayer('layer1');
+                setFeatureState(false);
               }
             }}
           ></Button>
