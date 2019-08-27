@@ -32,6 +32,8 @@ class ArcGISMapView extends React.Component {
     onMapDidLoad: PropTypes.func,
     onMapMoved: PropTypes.func,
     onSingleTap: PropTypes.func,
+    addFeatureLayer: PropTypes.string,
+
   };
 
   static defaultProps = {
@@ -138,6 +140,15 @@ class ArcGISMapView extends React.Component {
       [args]
     );
   }
+
+  addFeatureLayer = args => {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this.agsMapRef),
+      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.addFeatureLayerViaManager,
+      [args]
+    );
+  };
+
 
   // MARK: Render
   render() {

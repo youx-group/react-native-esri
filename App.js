@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Image } from 'react-native';
-import ArcGISMapView from './AGSMapView'
-import service from './service';
+import { View, Image, Button } from 'react-native';
+import ArcGISMapView, { setLicenseKey } from './AGSMapView';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    setLicenseKey('runtimelite,1000,rud1919843927,none,ZZ0RJAY3FLJ5EBZNR193');
+  }
 
   async componentDidMount() {
     const response = await fetch('http://homologacao.grd.geotech4web.com.br/public/ocorrencia/ativas/geojson');
@@ -48,11 +51,20 @@ class App extends React.Component {
           rotationEnabled={false}
           mapBasemap={{ type: 'normal' }}
         />
+        <Button
+          title='layer'
+          onPress={() => {
+            this.mapView.addFeatureLayer(url);
+          }}
+        ></Button>
+
       </View >
     );
   }
 };
 
-{ url: "", fill: false / true }
+const url = {
+  url: 'http://sistemas.gt4w.com.br/arcgis/rest/services/rs/MunicipiosRS/MapServer/0/',
+}
 
 export default App;

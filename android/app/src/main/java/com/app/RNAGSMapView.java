@@ -159,7 +159,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
         // create feature layer with its service feature table
         // create the service feature table
         ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(
-                "http://sistemas.gt4w.com.br/arcgis/rest/services/rs/MunicipiosRS/MapServer/0/");
+                "http://sistemas.gt4w.com.br/arcgis/rest/services/rs/estado_rs/MapServer/0/");
 
         // create the feature layer using the service feature table
         FeatureLayer featureLayer = new FeatureLayer(serviceFeatureTable);
@@ -261,6 +261,25 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
             Polygon polygon = new Polygon(pointCollection);
             mapView.setViewpointGeometryAsync(polygon, 50);
         }
+
+    }
+
+    public void addFeatureLayer(ReadableMap args) {
+        String layerUrl;
+
+        if(args == null) {
+            return;
+        }
+
+        layerUrl = args.getString("url");
+        RNEsriFeatureLayer rnEsriFeatureLayer = new RNEsriFeatureLayer(layerUrl);
+
+        // create the feature layer using the service feature table
+        FeatureLayer featureLayer = new FeatureLayer(rnEsriFeatureLayer.setFeatureTable(layerUrl));
+
+        ArcGISMap map = mapView.getMap();
+        map.getOperationalLayers().add(featureLayer);
+        mapView.setMap(map);
 
     }
 
