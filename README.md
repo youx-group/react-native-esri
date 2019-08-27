@@ -1,6 +1,6 @@
 # **react-native-esri**
 
-### **_⚡ A React Native performance-focused map component for iOS and Android built around Swift and Java Esri's ArcGIS SDKs._**
+### **_⚡ A React Native performance-focused map component for iOS and Android, built around Swift/Java native Esri's ArcGIS SDKs._**
 
 <p align="center">
   <img src="react-native-esri.png">
