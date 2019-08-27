@@ -41,7 +41,7 @@ class RNEsriMapViewManager: RCTViewManager {
     }
   }
   
-  @objc func addFeatureLayerViaManager(_ node: NSNumber, args: NSString){
+  @objc func addFeatureLayerViaManager(_ node: NSNumber, args: NSDictionary){
     DispatchQueue.main.async {
       let component = self.bridge.uiManager.view(forReactTag: node) as! RNEsriMapView
       component.addFeatureLayer(args)

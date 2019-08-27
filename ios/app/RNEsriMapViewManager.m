@@ -27,7 +27,7 @@ RCT_EXPORT_VIEW_PROPERTY(onMapMoved, RCTDirectEventBlock)
 
 
 // MARK: External method exports (these can be called from react via a reference)
-RCT_EXTERN_METHOD(addFeatureLayerViaManager:(nonnull NSNumber*)node args:(NSString*)args)
+RCT_EXTERN_METHOD(addFeatureLayerViaManager:(nonnull NSNumber*)node args:(NSDictionary*)args)
 
 RCT_EXTERN_METHOD(showCalloutViaManager:(nonnull NSNumber*)node args:(NSDictionary*)args)
 RCT_EXTERN_METHOD(centerMapViaManager:(nonnull NSNumber*)node args:(NSDictionary*)args)

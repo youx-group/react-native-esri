@@ -139,8 +139,8 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
     }
   }
   
-  @objc func addFeatureLayer(_ args: NSString) {
-    let rnFeatureLayer = RNEsriFeatureLayer(url:args as String)
+  @objc func addFeatureLayer(_ args: NSDictionary) {
+    let rnFeatureLayer = RNEsriFeatureLayer(rawData: args)
     self.map!.operationalLayers.add(rnFeatureLayer)
   }
   

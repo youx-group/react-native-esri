@@ -116,7 +116,8 @@ class App extends React.Component {
                 this.mapView.addFeatureLayer({
                   url:
                     'http://sistemas.gt4w.com.br/arcgis/rest/services/rs/MunicipiosRS/MapServer/0/',
-                  fill: false
+                  outline: '#FF0000',
+                  fill: '#00FF00'
                 });
               }}
             ></Button>
