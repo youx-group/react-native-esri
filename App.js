@@ -113,9 +113,11 @@ class App extends React.Component {
             <Button
               title='layer'
               onPress={() => {
-                this.mapView.addFeatureLayer(
-                  'http://sistemas.gt4w.com.br/arcgis/rest/services/rs/MunicipiosRS/MapServer/0/'
-                );
+                this.mapView.addFeatureLayer({
+                  url:
+                    'http://sistemas.gt4w.com.br/arcgis/rest/services/rs/MunicipiosRS/MapServer/0/',
+                  fill: false
+                });
               }}
             ></Button>
           </View>
