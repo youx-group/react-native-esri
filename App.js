@@ -12,8 +12,8 @@ const overlay2 = {
         { longitude: -52.28393554687499, latitude: -28.488005204159457 },
         { longitude: -55.294189453125, latitude: -29.983486718474694 }
       ],
-      color: '#5ac8fa40',
-      outline: '#ff2d55'
+      color: '#0c819c40',
+      outline: '#00897b'
     }
   ]
 };
@@ -114,7 +114,7 @@ const App = () => {
                 mapView.addFeatureLayer({
                   url:
                     'http://sistemas.gt4w.com.br/arcgis/rest/services/rs/MunicipiosRS/MapServer/0/',
-                  outline: '#FF3F80',
+                  outline: '#8764b8',
                   fill: '#c5116210',
                   referenceId: 'layer1'
                 });
