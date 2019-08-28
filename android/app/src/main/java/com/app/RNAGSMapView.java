@@ -154,9 +154,9 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
 
         Double latitude = item.getDouble("latitude");
         Double longitude = item.getDouble("longitude");
-        Integer initialZoom = item.getInt("initialZoom");
+        Integer scale = item.getInt("scale");
 
-        ArcGISMap initialMap = new ArcGISMap(Basemap.Type.STREETS_VECTOR, latitude, longitude, initialZoom);
+        ArcGISMap initialMap = new ArcGISMap(Basemap.Type.STREETS_VECTOR, latitude, longitude, scale);
 
         mapView.setMap(initialMap);
     }

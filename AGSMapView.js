@@ -37,7 +37,7 @@ class ArcGISMapView extends React.Component {
 
   static defaultProps = {
     initialMapCenter: [
-      { latitude: -30.304790, longitude: -53.286374 }
+      { latitude: -30.304790, longitude: -53.286374, scale: 7 }
     ],
     minZoom: 0,
     maxZoom: 0,
