@@ -1,5 +1,7 @@
 {
-  "name": "app",
+  "name": "react-native-esri",
+  "author": "GT4W",
+  "license": "MIT",
   "version": "0.0.1",
   "private": true,
   "main": "EsriMapView.js",
@@ -8,7 +10,7 @@
     "test": "jest",
     "lint": "eslint ."
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "16.8.6",
     "react-native": "0.60.5"
   },
