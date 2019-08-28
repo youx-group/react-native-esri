@@ -1,15 +1,18 @@
 {
-  "name": "app",
+  "name": "react-native-esri",
+  "author": "GT4W",
+  "license": "MIT",
   "version": "0.0.1",
   "private": true,
+  "main": "EsriMapView.js",
   "scripts": {
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
   },
-  "dependencies": {
-    "react": "16.8.6",
-    "react-native": "0.60.5"
+  "peerDependencies": {
+    "react": "^16.8",
+    "react-native": "^0.60"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
