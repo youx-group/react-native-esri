@@ -11,8 +11,7 @@
     "lint": "eslint ."
   },
   "peerDependencies": {
-    "react": "^16.8",
-    "react-native": "^0.60"
+    "react-native": ">= 0.60"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
