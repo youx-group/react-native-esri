@@ -91,7 +91,7 @@ points: [
 - **lines**: an array used to define lines location and attributes, containing the following fields:
 
 ```
-polygons: [
+lines: [
   {
     points: [
       { longitude: -55.294189453125, latitude: -29.983486718474694 },
