@@ -18,4 +18,5 @@ Pod::Spec.new do |s|
 
   s.dependency 'React'
   s.dependency 'ArcGIS-Runtime-SDK-iOS', '100.6'
+  s.dependency 'UIColor_Hex_Swift', '~> 5.1.0'
 end
