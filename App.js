@@ -25,6 +25,12 @@ class App extends React.Component {
       point = {};
     });
 
+    point.latitude = -30.304790
+    point.longitude = -53.286374
+    point.graphicId = 'point'
+    point.referenceId = '10';
+    points.push(point);
+
     overlay = {
       referenceId: 'overlay1',
       pointGraphics: [
@@ -66,6 +72,16 @@ class App extends React.Component {
 const url = {
   url: 'http://sistemas.gt4w.com.br/arcgis/rest/services/rs/MunicipiosRS/MapServer/0/',
   outlineColor: '#000000',
+}
+
+let teste =
+{
+  point: {
+    latitude: -45.000064,
+    longitude: -21.2430804
+  },
+  title: 'oi',
+  text: 'fala',
 }
 
 export default App;

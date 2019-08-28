@@ -191,6 +191,8 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'com.esri.arcgisruntime:arcgis-android:100.5.0'
+    implementation "com.android.support:support-core-utils:28.0.0"
+    implementation 'com.esri.arcgis.android:arcgis-android:10.2.9'
 
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";
