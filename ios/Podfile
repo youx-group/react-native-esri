@@ -37,13 +37,3 @@ target 'app' do
 
   use_native_modules!
 end
-
-target 'app-tvOS' do
-  # Pods for app-tvOS
-
-  target 'app-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-end
