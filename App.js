@@ -29,6 +29,7 @@ class App extends React.Component {
     point.longitude = -53.286374
     point.graphicId = 'point'
     point.referenceId = '10';
+    point.ocorrencia = "Oitent"
     points.push(point);
 
     overlay = {

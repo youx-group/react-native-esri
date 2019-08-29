@@ -1,17 +1,24 @@
 package com.app;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.system.ErrnoException;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.esri.arcgisruntime.ArcGISRuntimeException;
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
+import com.esri.arcgisruntime.data.ArcGISFeature;
 import com.esri.arcgisruntime.data.ServiceFeatureTable;
 import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.geometry.GeometryEngine;
@@ -24,6 +31,7 @@ import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
 import com.esri.arcgisruntime.mapping.Basemap;
 import com.esri.arcgisruntime.mapping.Viewpoint;
+import com.esri.arcgisruntime.mapping.popup.Popup;
 import com.esri.arcgisruntime.mapping.view.Callout;
 import com.esri.arcgisruntime.mapping.view.DefaultMapViewOnTouchListener;
 import com.esri.arcgisruntime.mapping.view.Graphic;
@@ -53,6 +61,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class RNAGSMapView extends LinearLayout implements LifecycleEventListener {
     // MARK: Variables/Prop declarations
@@ -458,7 +468,41 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
                             Graphic result = graphicResult.get(0);
                             map.putString("graphicReferenceId", Objects.requireNonNull(result.getAttributes().get("referenceId")).toString());
                             if (recenterIfGraphicTapped) {
+
+                                // Center the map on tap
                                 mapView.setViewpointCenterAsync(((Point) result.getGeometry()));
+
+                                // Creates a popup windows
+                                LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                                View customView = inflater.inflate(R.layout.custom_layout,null);
+
+                                // Set the informations on popup that comes from the point object
+                                TextView textView = customView.findViewById(R.id.tv);
+                                textView.setText(result.getAttributes().get("ocorrencia").toString());
+
+                                PopupWindow mPopupWindow = new PopupWindow(
+                                        customView,
+                                        LayoutParams.WRAP_CONTENT,
+                                        LayoutParams.WRAP_CONTENT
+                                );
+
+                                if(Build.VERSION.SDK_INT>=21){
+                                    mPopupWindow.setElevation(5.0f);
+                                }
+
+                                // Close button
+                                ImageButton closeButton = (ImageButton) customView.findViewById(R.id.ib_close);
+
+                                closeButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        // Dismiss the popup window
+                                        mPopupWindow.dismiss();
+                                    }
+                                });
+
+                                mPopupWindow.showAtLocation(rootView, Gravity.CENTER,0,0);
+
                             }
                         }
                     }
