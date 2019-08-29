@@ -52,8 +52,8 @@
 		170A92262310275A007488D1 /* RNEsriMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNEsriMapView.swift; sourceTree = "<group>"; };
 		170A922823102AF2007488D1 /* RNEsriRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNEsriRouter.swift; sourceTree = "<group>"; };
 		170A922A23102B58007488D1 /* RNEsriGraphicsOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNEsriGraphicsOverlay.swift; sourceTree = "<group>"; };
-		170A922E23102E71007488D1 /* RNEsriMapViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RNEsriMapViewManager.swift; path = app/RNEsriMapViewManager.swift; sourceTree = "<group>"; };
-		170A923023102E87007488D1 /* RNEsriMapViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNEsriMapViewManager.m; path = app/RNEsriMapViewManager.m; sourceTree = "<group>"; };
+		170A922E23102E71007488D1 /* RNEsriMapViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNEsriMapViewManager.swift; sourceTree = "<group>"; };
+		170A923023102E87007488D1 /* RNEsriMapViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNEsriMapViewManager.m; sourceTree = "<group>"; };
 		179690BD2314575700860775 /* RNEsriFeatureLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNEsriFeatureLayer.swift; sourceTree = "<group>"; };
 		179E96E92CAD399ED669358F /* libPods-app.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-app.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17FDA86623107047002C52D3 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
@@ -113,6 +113,7 @@
 		13B07FAE1A68108700A75B9A /* app */ = {
 			isa = PBXGroup;
 			children = (
+				174276FC23181BFF00C3EA9C /* src */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -120,18 +121,57 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				170A922523102759007488D1 /* app-Bridging-Header.h */,
+			);
+			name = app;
+			sourceTree = "<group>";
+		};
+		174276FC23181BFF00C3EA9C /* src */ = {
+			isa = PBXGroup;
+			children = (
+				1742770223181D6900C3EA9C /* Bridge */,
+				1742770023181CFE00C3EA9C /* Model */,
+				170A922823102AF2007488D1 /* RNEsriRouter.swift */,
+				170A92262310275A007488D1 /* RNEsriMapView.swift */,
+				170A922E23102E71007488D1 /* RNEsriMapViewManager.swift */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		174276FE23181CD300C3EA9C /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
 				17FDA86C2310978A002C52D3 /* Line.swift */,
 				17FDA86623107047002C52D3 /* Point.swift */,
 				17FDA868231070CC002C52D3 /* Polygon.swift */,
-				170A922823102AF2007488D1 /* RNEsriRouter.swift */,
-				170A92262310275A007488D1 /* RNEsriMapView.swift */,
+			);
+			name = Geometry;
+			sourceTree = "<group>";
+		};
+		1742770023181CFE00C3EA9C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1742770123181D3900C3EA9C /* ArcGIS */,
+				174276FE23181CD300C3EA9C /* Geometry */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1742770123181D3900C3EA9C /* ArcGIS */ = {
+			isa = PBXGroup;
+			children = (
 				179690BD2314575700860775 /* RNEsriFeatureLayer.swift */,
 				170A922A23102B58007488D1 /* RNEsriGraphicsOverlay.swift */,
-				170A922E23102E71007488D1 /* RNEsriMapViewManager.swift */,
-				170A923023102E87007488D1 /* RNEsriMapViewManager.m */,
 			);
-			name = app;
+			name = ArcGIS;
+			sourceTree = "<group>";
+		};
+		1742770223181D6900C3EA9C /* Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				170A923023102E87007488D1 /* RNEsriMapViewManager.m */,
+				170A922523102759007488D1 /* app-Bridging-Header.h */,
+			);
+			name = Bridge;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
