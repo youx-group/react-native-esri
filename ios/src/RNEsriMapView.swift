@@ -89,11 +89,8 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
           {
             if self?.recenterIfGraphicTapped ?? false {
               self?.setViewpointCenter(mapPoint, completion: nil)
-              if let alert = item.graphics.first?.attributes["alert"]{
-                
-                print(alert)
-                
-                let popup = Popup(frame: UIScreen.main.bounds, title: "Ocorrência", description:"Santa Maria", closeText: "Fechar", continueText:"Ver mais", continueCallback: { () in print("Hello, world!") })
+              if let alert = item.graphics.first?.attributes["alert"] as! Alert? {
+                let popup = Popup(frame: UIScreen.main.bounds, title: alert.title, description:alert.description, closeText: alert.closeText, continueText:alert.continueText, continueCallback: { () in print("Hello, world!") })
                 let window = UIApplication.shared.windows.last
                 window?.addSubview(popup)
               }

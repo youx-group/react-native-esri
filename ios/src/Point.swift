@@ -66,7 +66,7 @@ public class Point {
       agsGraphic.attributes["referenceId"] = referenceId
     }
     if let alert = self.alert {
-      agsGraphic.attributes["alert"] = referenceId
+      agsGraphic.attributes["alert"] = alert
     }
     
     return agsGraphic
