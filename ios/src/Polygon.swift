@@ -14,11 +14,13 @@ public class Polygon{
   let points : [AGSPoint]
   let fill : UIColor
   let outline : UIColor
+  let referenceId : NSString?
   
-  init(_points:[AGSPoint], _color: String, _outline: String){
+  init(_points:[AGSPoint], _color: String, _outline: String, _referenceId:NSString){
     points = _points
     fill = UIColor(_color)
     outline = UIColor(_outline)
+    referenceId = _referenceId
   }
   
   init(rawData: NSDictionary){
@@ -30,6 +32,7 @@ public class Polygon{
     self.points = _points
     self.fill = UIColor(rawData["fillColor"] as! String)
     self.outline = UIColor(rawData["outlineColor"] as! String)
+    self.referenceId = rawData["referenceId"] as? NSString ?? nil
   }
   
   func toAGSPolygon() -> AGSPolygon{
@@ -42,6 +45,12 @@ public class Polygon{
     let polygonSymbol = AGSSimpleFillSymbol(style: .solid, color: self.fill, outline: polygonOutlineSymbol)
     let polygon = self.toAGSPolygon()
     let polygonGraphic = AGSGraphic(geometry: polygon, symbol: polygonSymbol, attributes: nil)
+    
+    if let referenceId = self.referenceId
+    {
+      polygonGraphic.attributes["referenceId"] = referenceId
+    }
+    
     return polygonGraphic
   }
 }

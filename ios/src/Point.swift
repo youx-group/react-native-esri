@@ -15,20 +15,33 @@ public class Point {
   let rotation: NSNumber?
   let referenceId: NSString?
   let imageId: NSString?
-  init(_latitude: NSNumber, _longitude: NSNumber, _rotation: NSNumber?, _attributes: [String: Any]?, _referenceId: NSString?, _imageId: NSString?) {
+  
+  let alert: Alert?
+  
+  init(_latitude: NSNumber, _longitude: NSNumber, _rotation: NSNumber?, _attributes: [String: Any]?, _referenceId: NSString?, _imageId: NSString?, alert: Alert) {
     self.latitude = _latitude
     self.longitude = _longitude
     self.rotation = _rotation
-    self.referenceId = _referenceId
     self.imageId = _imageId
+    
+    self.referenceId = _referenceId
+    self.alert = alert
   }
   
   init(rawData: NSDictionary) {
-      self.latitude = rawData["latitude"] as! NSNumber
-      self.longitude = rawData["longitude"] as! NSNumber
-      self.rotation = rawData["rotation"] as? NSNumber ?? 0
-      self.referenceId = rawData["referenceId"] as? NSString ?? nil
-      self.imageId = rawData["graphicId"] as? NSString
+    self.latitude = rawData["latitude"] as! NSNumber
+    self.longitude = rawData["longitude"] as! NSNumber
+    self.rotation = rawData["rotation"] as? NSNumber ?? 0
+    self.imageId = rawData["graphicId"] as? NSString
+    
+    self.referenceId = rawData["referenceId"] as? NSString ?? nil
+    
+    if let tempAlert  = rawData["alert"] as! NSDictionary? {
+      self.alert = Alert(rawData: tempAlert)
+    }
+    else {
+      self.alert = nil
+    }
   }
   
   func toAGSPoint () -> AGSPoint{
@@ -49,9 +62,11 @@ public class Point {
       agsGraphic = AGSGraphic(geometry: agsPoint, symbol: symbol, attributes: nil)
     }
     
-    if let referenceId = self.referenceId
-    {
+    if let referenceId = self.referenceId {
       agsGraphic.attributes["referenceId"] = referenceId
+    }
+    if let alert = self.alert {
+      agsGraphic.attributes["alert"] = referenceId
     }
     
     return agsGraphic

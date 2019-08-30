@@ -11,12 +11,14 @@ import Foundation
 import UIColor_Hex_Swift
 
 public class Line{
+  let referenceId : NSString?
   let points : [AGSPoint]
   let outline : UIColor
   
-  init(_points:[AGSPoint], _outline: String){
+  init(_points:[AGSPoint], _outline: String, _referenceId:NSString){
     points = _points
     outline = UIColor(_outline)
+    referenceId = _referenceId
   }
   
   init(rawData: NSDictionary){
@@ -27,6 +29,7 @@ public class Line{
     }
     self.points = _points
     self.outline = UIColor(rawData["outlineColor"] as! String)
+    self.referenceId = rawData["referenceId"] as? NSString ?? nil
   }
   
   func toAGSPolyline() -> AGSPolyline{
@@ -38,6 +41,12 @@ public class Line{
     let polyline : AGSPolyline = self.toAGSPolyline()
     let polylineSymbol = AGSSimpleLineSymbol(style: .solid, color: outline, width: 3.0)
     let polylineGraphic = AGSGraphic(geometry: polyline, symbol: polylineSymbol, attributes: nil)
+    
+    if let referenceId = self.referenceId
+    {
+      polylineGraphic.attributes["referenceId"] = referenceId
+    }
+    
     return polylineGraphic
   }
 }

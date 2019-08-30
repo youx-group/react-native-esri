@@ -32,9 +32,13 @@ const overlay1 = {
       latitude: -29.382175075145277,
       rotation: 0,
       graphicId: 'point',
-      callback: () => {
-        alert('Touched');
-      }
+      alert: {
+        title: 'Ocorrência',
+        description: 'Município: Santa Maria',
+        closeText: 'Fechar',
+        continueText: 'Ver mais'
+      },
+      referenceId: '15'
     },
     {
       longitude: -52.97607421875,

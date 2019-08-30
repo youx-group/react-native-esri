@@ -17,6 +17,10 @@
 		170A922B23102B58007488D1 /* RNEsriGraphicsOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170A922A23102B58007488D1 /* RNEsriGraphicsOverlay.swift */; };
 		170A922F23102E71007488D1 /* RNEsriMapViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170A922E23102E71007488D1 /* RNEsriMapViewManager.swift */; };
 		170A923123102E87007488D1 /* RNEsriMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 170A923023102E87007488D1 /* RNEsriMapViewManager.m */; };
+		1742770A231833E000C3EA9C /* RNEsri.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17427709231833E000C3EA9C /* RNEsri.xcassets */; };
+		1742772823196E4A00C3EA9C /* Popup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1742772723196E4A00C3EA9C /* Popup.xib */; };
+		1742772A23196E7000C3EA9C /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1742772923196E7000C3EA9C /* Popup.swift */; };
+		1742773123198A2500C3EA9C /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1742773023198A2500C3EA9C /* Alert.swift */; };
 		179690BE2314575700860775 /* RNEsriFeatureLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179690BD2314575700860775 /* RNEsriFeatureLayer.swift */; };
 		17FDA86723107047002C52D3 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FDA86623107047002C52D3 /* Point.swift */; };
 		17FDA869231070CC002C52D3 /* Polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FDA868231070CC002C52D3 /* Polygon.swift */; };
@@ -54,6 +58,10 @@
 		170A922A23102B58007488D1 /* RNEsriGraphicsOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNEsriGraphicsOverlay.swift; sourceTree = "<group>"; };
 		170A922E23102E71007488D1 /* RNEsriMapViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNEsriMapViewManager.swift; sourceTree = "<group>"; };
 		170A923023102E87007488D1 /* RNEsriMapViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNEsriMapViewManager.m; sourceTree = "<group>"; };
+		17427709231833E000C3EA9C /* RNEsri.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = RNEsri.xcassets; sourceTree = "<group>"; };
+		1742772723196E4A00C3EA9C /* Popup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Popup.xib; sourceTree = "<group>"; };
+		1742772923196E7000C3EA9C /* Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
+		1742773023198A2500C3EA9C /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		179690BD2314575700860775 /* RNEsriFeatureLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNEsriFeatureLayer.swift; sourceTree = "<group>"; };
 		179E96E92CAD399ED669358F /* libPods-app.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-app.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17FDA86623107047002C52D3 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
@@ -128,11 +136,11 @@
 		174276FC23181BFF00C3EA9C /* src */ = {
 			isa = PBXGroup;
 			children = (
+				17427704231824B900C3EA9C /* Controllers */,
+				174277032318249F00C3EA9C /* Views */,
 				1742770223181D6900C3EA9C /* Bridge */,
-				1742770023181CFE00C3EA9C /* Model */,
-				170A922823102AF2007488D1 /* RNEsriRouter.swift */,
-				170A92262310275A007488D1 /* RNEsriMapView.swift */,
-				170A922E23102E71007488D1 /* RNEsriMapViewManager.swift */,
+				1742770023181CFE00C3EA9C /* Models */,
+				17427709231833E000C3EA9C /* RNEsri.xcassets */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -140,20 +148,21 @@
 		174276FE23181CD300C3EA9C /* Geometry */ = {
 			isa = PBXGroup;
 			children = (
-				17FDA86C2310978A002C52D3 /* Line.swift */,
 				17FDA86623107047002C52D3 /* Point.swift */,
+				17FDA86C2310978A002C52D3 /* Line.swift */,
 				17FDA868231070CC002C52D3 /* Polygon.swift */,
 			);
 			name = Geometry;
 			sourceTree = "<group>";
 		};
-		1742770023181CFE00C3EA9C /* Model */ = {
+		1742770023181CFE00C3EA9C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1742772D2319892900C3EA9C /* Components */,
 				1742770123181D3900C3EA9C /* ArcGIS */,
 				174276FE23181CD300C3EA9C /* Geometry */,
 			);
-			name = Model;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		1742770123181D3900C3EA9C /* ArcGIS */ = {
@@ -172,6 +181,33 @@
 				170A922523102759007488D1 /* app-Bridging-Header.h */,
 			);
 			name = Bridge;
+			sourceTree = "<group>";
+		};
+		174277032318249F00C3EA9C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1742772723196E4A00C3EA9C /* Popup.xib */,
+				1742772923196E7000C3EA9C /* Popup.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		17427704231824B900C3EA9C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				170A922823102AF2007488D1 /* RNEsriRouter.swift */,
+				170A92262310275A007488D1 /* RNEsriMapView.swift */,
+				170A922E23102E71007488D1 /* RNEsriMapViewManager.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		1742772D2319892900C3EA9C /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1742773023198A2500C3EA9C /* Alert.swift */,
+			);
+			name = Components;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -320,6 +356,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				1742770A231833E000C3EA9C /* RNEsri.xcassets in Resources */,
+				1742772823196E4A00C3EA9C /* Popup.xib in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,7 +482,9 @@
 				170A922F23102E71007488D1 /* RNEsriMapViewManager.swift in Sources */,
 				179690BE2314575700860775 /* RNEsriFeatureLayer.swift in Sources */,
 				170A922B23102B58007488D1 /* RNEsriGraphicsOverlay.swift in Sources */,
+				1742773123198A2500C3EA9C /* Alert.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				1742772A23196E7000C3EA9C /* Popup.swift in Sources */,
 				17FDA869231070CC002C52D3 /* Polygon.swift in Sources */,
 				170A922923102AF2007488D1 /* RNEsriRouter.swift in Sources */,
 				170A92272310275A007488D1 /* RNEsriMapView.swift in Sources */,
@@ -540,7 +580,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "br.com.gt4w.react-native-esri";
 				PRODUCT_NAME = app;
-				SWIFT_OBJC_BRIDGING_HEADER = "app-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "src/app-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -565,7 +605,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "br.com.gt4w.react-native-esri";
 				PRODUCT_NAME = app;
-				SWIFT_OBJC_BRIDGING_HEADER = "app-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "src/app-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
