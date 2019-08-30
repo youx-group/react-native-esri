@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.system.ErrnoException;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -44,6 +46,9 @@ import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 import com.esri.arcgisruntime.symbology.SimpleRenderer;
 import com.esri.arcgisruntime.tasks.networkanalysis.Route;
 import com.esri.arcgisruntime.tasks.networkanalysis.RouteResult;
+import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.ReactNativeHost;
+import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactContext;
@@ -453,6 +458,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             WritableMap map = createPointMap(e);
+            WritableMap map2 = createPointMap(e);
             android.graphics.Point screenPoint = new android.graphics.Point(((int) e.getX()), ((int) e.getY()));
 
 
@@ -493,16 +499,25 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
                                 // Close button
                                 ImageButton closeButton = (ImageButton) customView.findViewById(R.id.ib_close);
 
-                                closeButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        // Dismiss the popup window
-                                        mPopupWindow.dismiss();
-                                    }
+                                Button button = (Button) customView.findViewById(R.id.button);
+
+                                closeButton.setOnClickListener(view -> {
+                                    // Dismiss the popup window
+                                    mPopupWindow.dismiss();
                                 });
 
-                                mPopupWindow.showAtLocation(rootView, Gravity.CENTER,0,0);
+                                button.setOnClickListener(view -> {
+                                    // Dismiss the popup window
+                                    emitEvent("onTapButton", map2);
+                                    mPopupWindow.dismiss();
 
+                                });
+
+                                // When user clicks outside the popup, the modal will close
+                                mPopupWindow.setBackgroundDrawable(new ColorDrawable());
+                                mPopupWindow.setOutsideTouchable(true);
+
+                                mPopupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
                             }
                         }
                     }
