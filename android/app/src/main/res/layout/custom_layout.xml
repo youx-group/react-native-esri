@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_custom_layout"
-    android:layout_width="200dp"
-    android:layout_height="100dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rounded_corner"
     android:padding="2dp"
-    android:background="#FFFFFF"
+    android:layout_marginBottom="50dp"
     >
+
     <ImageButton
         android:id="@+id/ib_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_close_white_24dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:background="@null"
+        android:src="@drawable/ic_close_black_24dp"
         />
+
     <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="This is a sample popup window."
-        android:layout_centerInParent="true"
-        android:padding="25sp"
+        android:padding="10sp"
+
         />
+    <TextView
+        android:id="@+id/tvvv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is a sample popup window."
+        android:padding="10sp"
+        android:layout_below="@+id/tv"
+        />
+    <TextView
+        android:id="@+id/tvvvv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is a sample popup window."
+        android:padding="10sp"
+        android:layout_below="@+id/tvvv"
+        />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tvvvv"
+        />
+
 </RelativeLayout>
