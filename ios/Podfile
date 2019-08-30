@@ -29,6 +29,8 @@ target 'app' do
 
   pod 'RNArcGISMapView', :path => '../node_modules/react-native-arcgis-mapview'
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
   target 'appTests' do
     inherit! :search_paths
     # Pods for testing
