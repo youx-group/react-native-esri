@@ -29,7 +29,7 @@ class App extends React.Component {
     point.longitude = -53.286374
     point.graphicId = 'point'
     point.referenceId = '10';
-    point.ocorrencia = "Oitent"
+    point.ocorrencia = "Oitenta"
     points.push(point);
 
     overlay = {
@@ -57,15 +57,10 @@ class App extends React.Component {
           recenterIfGraphicTapped={true}
           rotationEnabled={false}
           mapBasemap={{ type: 'normal' }}
+          onTapButton={() => alert('oi')}
         />
-        <Button
-          title='layer'
-          onPress={() => {
-            this.mapView.addFeatureLayer(url);
-          }}
-        ></Button>
 
-      </View >
+      </View>
     );
   }
 };
