@@ -84,6 +84,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
     Double maxZoom = 0.0;
     Boolean rotationEnabled = true;
     public PopupWindow mPopupWindow;
+    Graphic result;
 
     // MARK: Initializers
     public RNAGSMapView(Context context) {
@@ -472,20 +473,23 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
                         List<Graphic> graphicResult = futureResult.getGraphics();
                         // More null checking >.>
                         if (!graphicResult.isEmpty()) {
-                            Graphic result = graphicResult.get(0);
+                            result = graphicResult.get(0);
                             map.putString("graphicReferenceId", Objects.requireNonNull(result.getAttributes().get("referenceId")).toString());
                             if (recenterIfGraphicTapped) {
 
                                 // Center the map on tap
                                 mapView.setViewpointCenterAsync(((Point) result.getGeometry()));
 
-                                // Set the custom view for the popup
-                                LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                                View customView = inflater.inflate(R.layout.custom_layout,null);
+                                // If there is no alert, the popup is setted and the callback of the onTapPopupButton its called
+                                if(result.getAttributes().get("title") != null) {
+                                    // Set the custom view for the popup
+                                    LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                                    View customView = inflater.inflate(R.layout.custom_layout, null);
 
-                                setPopupWindow(customView, result);
-                                setPopupCloseButton(customView);
-                                setPopupActionButton(customView, mapForAction);
+                                    setPopupWindow(customView, result);
+                                    setPopupCloseButton(customView);
+                                    setPopupActionButton(customView, mapForAction);
+                                }
 
                             }
                         }
@@ -493,7 +497,10 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
                 } catch (InterruptedException | ExecutionException exception) {
                     exception.printStackTrace();
                 } finally {
-                    emitEvent("onSingleTap",map);
+                    // If there is no alert, its called the callback of the onSingleTap
+                    if(result.getAttributes().get("title") == null) {
+                        emitEvent("onSingleTap", map);
+                    }
                 }
             });
 
@@ -505,9 +512,20 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
     // MARK: Popup configs
     public void setPopupWindow(View customView, Graphic result) {
 
+//        if (!args.hasKey("overlayReferenceId")) {
+//            Log.w("Warning (AGS)", "No overlay with the associated ID was found.");
+//            return;
+//        }
+//        String overlayReferenceId = args.getString("overlayReferenceId");
+
         // Set the informations on popup that comes from the point object
         TextView textView = customView.findViewById(R.id.tv);
-        textView.setText(result.getAttributes().get("ocorrencia").toString());
+        String title = result.getAttributes().get("title").toString();
+        String description = result.getAttributes().get("description").toString();
+        String closeButtonTitle = result.getAttributes().get("closeButtonTitle").toString();
+        String continueButtonTitle = result.getAttributes().get("continueButtonTitle").toString();
+
+        textView.setText(description);
 
         mPopupWindow = new PopupWindow(
                 customView,

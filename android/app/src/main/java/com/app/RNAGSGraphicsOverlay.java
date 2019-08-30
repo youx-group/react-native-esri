@@ -202,7 +202,15 @@ public class RNAGSGraphicsOverlay {
             }
         }
         result.getAttributes().put("referenceId", point.getReferenceId());
-        result.getAttributes().put("ocorrencia", point.getOcorrencia());
+
+        if(point.getAlert() != null) {
+            Map<String, Object> alertTransformedToMap = readableMapToMap(point.getAlert());
+            result.getAttributes().put("title", alertTransformedToMap.get("title"));
+            result.getAttributes().put("description", alertTransformedToMap.get("description"));
+            result.getAttributes().put("closeButtonTitle", alertTransformedToMap.get("closeButtonTitle"));
+            result.getAttributes().put("continueButtonTitle", alertTransformedToMap.get("continueButtonTitle"));
+        }
+
         return result;
 
     }
@@ -225,7 +233,7 @@ public class RNAGSGraphicsOverlay {
         private String referenceId;
         private Map<String, Object> attributes;
         private String graphicId;
-        private String ocorrencia;
+        private ReadableMap alert;
 
         public static Point fromRawData(ReadableMap rawData) {
             // Convert map to attribute map
@@ -242,9 +250,9 @@ public class RNAGSGraphicsOverlay {
             if (rawData.hasKey("graphicId")) {
                 graphicId = rawData.getString("graphicId");
             }
-            String ocorrencia = "";
-            if (rawData.hasKey("ocorrencia")) {
-                ocorrencia = rawData.getString("ocorrencia");
+            ReadableMap alert = null;
+            if (rawData.hasKey("alert")) {
+                alert = rawData.getMap("alert");
             }
             return new Point(
                     rawData.getDouble("latitude"),
@@ -253,19 +261,19 @@ public class RNAGSGraphicsOverlay {
                     rawData.getString("referenceId"),
                     map,
                     graphicId,
-                    ocorrencia
+                    alert
             );
         }
 
         private Point(Double latitude, Double longitude, Double rotation, String referenceId,
-                      Map<String, Object> attributes, String graphicId, String ocorrencia) {
+                      Map<String, Object> attributes, String graphicId, ReadableMap alert) {
             this.latitude = latitude;
             this.longitude = longitude;
             this.rotation = rotation;
             this.referenceId = referenceId;
             this.attributes = attributes;
             this.graphicId = graphicId;
-            this.ocorrencia = ocorrencia;
+            this.alert = alert;
         }
 
         // MARK: Get/Set
@@ -289,8 +297,8 @@ public class RNAGSGraphicsOverlay {
             this.graphicId = graphicId;
         }
 
-        public void setOcorrencia(String ocorrencia) {
-            this.ocorrencia = ocorrencia;
+        public void setAlert(ReadableMap alert) {
+            this.alert = alert;
         }
 
         public void setAttributes(Map<String, Object> attributes) {
@@ -321,8 +329,8 @@ public class RNAGSGraphicsOverlay {
             return latitude;
         }
 
-        public String getOcorrencia() {
-            return ocorrencia;
+        public ReadableMap getAlert() {
+            return alert;
         }
     }
 }

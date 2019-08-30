@@ -30,7 +30,14 @@ class MapView extends React.Component {
 		point.longitude = -53.286374
 		point.graphicId = 'point'
 		point.referenceId = '149';
-		point.ocorrencia = "detalhes"
+		point.alert = {
+			title: "Popup",
+			description: "Santa Maria",
+			closeButtonTitle: "",
+			continueButtonTitle: "Detalhes",
+			screenName: "Detalhes"
+		}
+
 		points.push(point);
 
 		overlay = {
@@ -59,12 +66,22 @@ class MapView extends React.Component {
 					recenterIfGraphicTapped={true}
 					rotationEnabled={false}
 					mapBasemap={{ type: 'normal' }}
+
 					onTapPopupButton={() => navigate('Detalhes', { id: 149 })}
+					onSingleTap={() => navigate('Detalhes', { id: 149 })}
 				/>
 			</View>
 		);
 	}
 };
+
+const alert = {
+	title: "Popup",
+	description: "",
+	closeButtonTitle: "",
+	continueButtonTitle: "",
+	screenName: "Detalhes"
+}
 
 const url = {
 	url: 'http://sistemas.gt4w.com.br/arcgis/rest/services/rs/MunicipiosRS/MapServer/0/',
