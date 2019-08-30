@@ -33,6 +33,7 @@ class ArcGISMapView extends React.Component {
     onMapMoved: PropTypes.func,
     onSingleTap: PropTypes.func,
     addFeatureLayer: PropTypes.arrayOf(PropTypes.object),
+    onTapPopupButton: PropTypes.func,
   };
 
   static defaultProps = {
@@ -50,6 +51,7 @@ class ArcGISMapView extends React.Component {
     onMapDidLoad: () => { },
     onMapMoved: () => { },
     onRoutingStatusUpdate: () => { },
+    onTapPopupButton: () => { },
     routeUrl: '',
     addFeatureLayer: [{
       url: '',

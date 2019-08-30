@@ -511,7 +511,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
                                 // Just like the onSingleTap
                                 button.setOnClickListener(view -> {
                                     // Dismiss the popup window
-                                    emitEvent("onTapButton", map2);
+                                    emitEvent("onTapPopupButton", map2);
                                     mPopupWindow.dismiss();
 
                                 });
