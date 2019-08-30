@@ -499,13 +499,16 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
                                 // Close button
                                 ImageButton closeButton = (ImageButton) customView.findViewById(R.id.ib_close);
 
+                                // Popup action button
                                 Button button = (Button) customView.findViewById(R.id.button);
-
+                                
                                 closeButton.setOnClickListener(view -> {
                                     // Dismiss the popup window
                                     mPopupWindow.dismiss();
                                 });
 
+                                // Add listener for this button, when clicked, a callback in the React, receives a event
+                                // Just like the onSingleTap
                                 button.setOnClickListener(view -> {
                                     // Dismiss the popup window
                                     emitEvent("onTapButton", map2);
