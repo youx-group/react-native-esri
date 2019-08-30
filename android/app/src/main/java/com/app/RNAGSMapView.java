@@ -83,6 +83,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
     Double minZoom = 0.0;
     Double maxZoom = 0.0;
     Boolean rotationEnabled = true;
+    public PopupWindow mPopupWindow;
 
     // MARK: Initializers
     public RNAGSMapView(Context context) {
@@ -458,7 +459,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             WritableMap map = createPointMap(e);
-            WritableMap map2 = createPointMap(e);
+            WritableMap mapForAction = createPointMap(e);
             android.graphics.Point screenPoint = new android.graphics.Point(((int) e.getX()), ((int) e.getY()));
 
 
@@ -478,49 +479,14 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
                                 // Center the map on tap
                                 mapView.setViewpointCenterAsync(((Point) result.getGeometry()));
 
-                                // Creates a popup windows
+                                // Set the custom view for the popup
                                 LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                                 View customView = inflater.inflate(R.layout.custom_layout,null);
 
-                                // Set the informations on popup that comes from the point object
-                                TextView textView = customView.findViewById(R.id.tv);
-                                textView.setText(result.getAttributes().get("ocorrencia").toString());
+                                setPopupWindow(customView, result);
+                                setPopupCloseButton(customView);
+                                setPopupActionButton(customView, mapForAction);
 
-                                PopupWindow mPopupWindow = new PopupWindow(
-                                        customView,
-                                        LayoutParams.WRAP_CONTENT,
-                                        LayoutParams.WRAP_CONTENT
-                                );
-
-                                if(Build.VERSION.SDK_INT>=21){
-                                    mPopupWindow.setElevation(5.0f);
-                                }
-
-                                // Close button
-                                ImageButton closeButton = (ImageButton) customView.findViewById(R.id.ib_close);
-
-                                // Popup action button
-                                Button button = (Button) customView.findViewById(R.id.button);
-                                
-                                closeButton.setOnClickListener(view -> {
-                                    // Dismiss the popup window
-                                    mPopupWindow.dismiss();
-                                });
-
-                                // Add listener for this button, when clicked, a callback in the React, receives a event
-                                // Just like the onSingleTap
-                                button.setOnClickListener(view -> {
-                                    // Dismiss the popup window
-                                    emitEvent("onTapPopupButton", map2);
-                                    mPopupWindow.dismiss();
-
-                                });
-
-                                // When user clicks outside the popup, the modal will close
-                                mPopupWindow.setBackgroundDrawable(new ColorDrawable());
-                                mPopupWindow.setOutsideTouchable(true);
-
-                                mPopupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
                             }
                         }
                     }
@@ -534,6 +500,63 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
 
             return true;
         }
+    }
+
+    // MARK: Popup configs
+    public void setPopupWindow(View customView, Graphic result) {
+
+        // Set the informations on popup that comes from the point object
+        TextView textView = customView.findViewById(R.id.tv);
+        textView.setText(result.getAttributes().get("ocorrencia").toString());
+
+        mPopupWindow = new PopupWindow(
+                customView,
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT
+        );
+
+        if(Build.VERSION.SDK_INT>=21){
+            mPopupWindow.setElevation(5.0f);
+        }
+
+        // When user clicks outside the popup, the modal will close
+        mPopupWindow.setBackgroundDrawable(new ColorDrawable());
+        mPopupWindow.setOutsideTouchable(true);
+
+        // Set location of popup
+        mPopupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
+
+    }
+
+
+    public void setPopupCloseButton(View customView) {
+
+        // Close button
+        ImageButton closeButton = (ImageButton) customView.findViewById(R.id.ib_close);
+
+        closeButton.setOnClickListener(view -> {
+            // Dismiss the popup window
+            mPopupWindow.dismiss();
+        });
+
+    }
+
+
+    public void setPopupActionButton(View customView, WritableMap mapForAction) {
+
+        // Popup action button
+        Button button = (Button) customView.findViewById(R.id.button);
+        button.setText("Detalhes");
+
+        // Add listener for this button, when clicked, a callback in the React, receives a event
+        // Just like the onSingleTap
+        button.setOnClickListener(view -> {
+            // Dismiss the popup window
+            emitEvent("onTapPopupButton", mapForAction);
+            mPopupWindow.dismiss();
+
+        });
+
     }
 
     // MARK: Lifecycle Event Listeners

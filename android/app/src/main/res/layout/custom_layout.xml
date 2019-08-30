@@ -48,6 +48,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_below="@+id/tvvvv"
+        android:text=""
         />
 
 </RelativeLayout>

@@ -48,7 +48,7 @@ public class RNEsriFeatureLayer {
         String fillColor = args.getString("fillColor");
         Integer parsedFillColor = Color.parseColor(fillColor);
 
-        // // Set the style and color
+        // Set the style and color
         // Can be change, to another types of filler
         simpleFillSymbol.setStyle(SimpleFillSymbol.Style.SOLID);
         simpleFillSymbol.setColor(parsedFillColor);
