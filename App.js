@@ -13,7 +13,13 @@ const overlay2 = {
         { longitude: -55.294189453125, latitude: -29.983486718474694 }
       ],
       fillColor: '#0c819c40',
-      outlineColor: '#00897b'
+      outlineColor: '#00897b',
+      alert: {
+        title: 'Alerta',
+        description: 'CREPDEC: Central',
+        closeText: 'Fechar',
+        continueText: 'Ver mais'
+      },
     }
   ]
 };

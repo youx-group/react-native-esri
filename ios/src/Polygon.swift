@@ -16,11 +16,14 @@ public class Polygon{
   let outline : UIColor
   let referenceId : NSString?
   
-  init(_points:[AGSPoint], _color: String, _outline: String, _referenceId:NSString){
-    points = _points
-    fill = UIColor(_color)
-    outline = UIColor(_outline)
-    referenceId = _referenceId
+  let alert: Alert?
+  
+  init(_points:[AGSPoint], _color: String, _outline: String, _referenceId:NSString, _alert:Alert){
+    self.points = _points
+    self.fill = UIColor(_color)
+    self.outline = UIColor(_outline)
+    self.referenceId = _referenceId
+    self.alert = _alert
   }
   
   init(rawData: NSDictionary){
@@ -33,6 +36,13 @@ public class Polygon{
     self.fill = UIColor(rawData["fillColor"] as! String)
     self.outline = UIColor(rawData["outlineColor"] as! String)
     self.referenceId = rawData["referenceId"] as? NSString ?? nil
+    
+    if let tempAlert  = rawData["alert"] as! NSDictionary? {
+      self.alert = Alert(rawData: tempAlert)
+    }
+    else {
+      self.alert = nil
+    }
   }
   
   func toAGSPolygon() -> AGSPolygon{
@@ -49,6 +59,9 @@ public class Polygon{
     if let referenceId = self.referenceId
     {
       polygonGraphic.attributes["referenceId"] = referenceId
+    }
+    if let alert = self.alert {
+      polygonGraphic.attributes["alert"] = alert
     }
     
     return polygonGraphic
