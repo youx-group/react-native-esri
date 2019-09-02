@@ -1,4 +1,4 @@
-platform :ios, '9.0'
+platform :ios, '11.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 target 'app' do
@@ -27,9 +27,8 @@ target 'app' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'RNArcGISMapView', :path => '../node_modules/react-native-arcgis-mapview'
-
-  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+  pod 'ArcGIS-Runtime-SDK-iOS', '100.6'
+  pod 'UIColor_Hex_Swift', '~> 5.1.0'
 
   target 'appTests' do
     inherit! :search_paths
@@ -37,14 +36,4 @@ target 'app' do
   end
 
   use_native_modules!
-end
-
-target 'app-tvOS' do
-  # Pods for app-tvOS
-
-  target 'app-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
 end

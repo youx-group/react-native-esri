@@ -1,11 +1,19 @@
 {
-  "name": "app",
+  "name": "react-native-esri",
+  "author": "GT4W",
+  "license": "MIT",
   "version": "0.0.1",
   "private": true,
+  "main": "EsriMapView.js",
+  "homepage": "https://www.gt4w.com.br",
+  "description": "A React Native performance-focused map component for iOS and Android, built around Swift/Java native Esri's ArcGIS SDKs.",
   "scripts": {
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "react-native": ">= 0.60"
   },
   "dependencies": {
     "axios": "^0.19.0",
