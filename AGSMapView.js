@@ -3,15 +3,23 @@
 import React from 'react'
 import { NativeEventEmitter, Platform, requireNativeComponent, NativeModules, UIManager, findNodeHandle, DeviceEventEmitter } from 'react-native'
 import PropTypes from 'prop-types'
-const AGSMap = requireNativeComponent('RNArcGISMapView', ArcGISMapView);
 
+let AGSMap;
+let moduleName;
+if (Platform.OS === 'ios') {
+  AGSMap = requireNativeComponent('RNEsriMapView', RNEsriMapView);
+  moduleName = 'RNEsriMapView';
+} else {
+  AGSMap = requireNativeComponent('RNArcGISMapView', ArcGISMapView);
+  moduleName = 'RNArcGISMapView';
+}
 
 class ArcGISMapView extends React.Component {
   constructor(props) {
     super(props);
-    var eventEmitter;
+    let eventEmitter;
     if (Platform.OS === 'ios') {
-      eventEmitter = new NativeEventEmitter(NativeModules.RNArcGISMapViewModule);
+      eventEmitter = new NativeEventEmitter(NativeModules.RNEsriMapViewModule);
     } else {
       eventEmitter = DeviceEventEmitter;
     }
@@ -66,7 +74,7 @@ class ArcGISMapView extends React.Component {
   showCallout = (args) => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.showCalloutViaManager,
+      UIManager.getViewManagerConfig(moduleName).Commands.showCalloutViaManager,
       [args]
     );
   };
@@ -74,7 +82,7 @@ class ArcGISMapView extends React.Component {
   recenterMap = (pointArray) => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.centerMapViaManager,
+      UIManager.getViewManagerConfig(moduleName).Commands.centerMapViaManager,
       [pointArray]
     );
   }
@@ -82,7 +90,7 @@ class ArcGISMapView extends React.Component {
   addGraphicsOverlay = (overlayData) => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.addGraphicsOverlayViaManager,
+      UIManager.getViewManagerConfig(moduleName).Commands.addGraphicsOverlayViaManager,
       [overlayData]
     );
   }
@@ -90,7 +98,7 @@ class ArcGISMapView extends React.Component {
   removeGraphicsOverlay = (overlayId) => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.removeGraphicsOverlayViaManager,
+      UIManager.getViewManagerConfig(moduleName).Commands.removeGraphicsOverlayViaManager,
       [overlayId]
     );
   }
@@ -98,7 +106,7 @@ class ArcGISMapView extends React.Component {
   addPointsToOverlay = (args) => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.addPointsToOverlayViaManager,
+      UIManager.getViewManagerConfig(moduleName).Commands.addPointsToOverlayViaManager,
       [args]
     );
   }
@@ -106,7 +114,7 @@ class ArcGISMapView extends React.Component {
   updatePointsOnOverlay = (args) => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.updatePointsInGraphicsOverlayViaManager,
+      UIManager.getViewManagerConfig(moduleName).Commands.updatePointsInGraphicsOverlayViaManager,
       [args]
     );
   }
@@ -114,7 +122,7 @@ class ArcGISMapView extends React.Component {
   removePointsFromOverlay = (args) => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.removePointsFromOverlayViaManager,
+      UIManager.getViewManagerConfig(moduleName).Commands.removePointsFromOverlayViaManager,
       [args]
     );
   }
@@ -122,7 +130,7 @@ class ArcGISMapView extends React.Component {
   routeGraphicsOverlay = (args) => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.routeGraphicsOverlayViaManager,
+      UIManager.getViewManagerConfig(moduleName).Commands.routeGraphicsOverlayViaManager,
       [args]
     );
   }
@@ -131,7 +139,7 @@ class ArcGISMapView extends React.Component {
     if (Platform.OS === 'ios') {
       UIManager.dispatchViewManagerCommand(
         findNodeHandle(this.agsMapRef),
-        UIManager.getViewManagerConfig('RNArcGISMapView').Commands.getRouteIsVisibleViaManager,
+        UIManager.getViewManagerConfig(moduleName).Commands.getRouteIsVisibleViaManager,
         [callback]
       );
     } else {
@@ -142,7 +150,7 @@ class ArcGISMapView extends React.Component {
   setRouteIsVisible = (args) => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.setRouteIsVisibleViaManager,
+      UIManager.getViewManagerConfig(moduleName).Commands.setRouteIsVisibleViaManager,
       [args]
     );
   }
@@ -150,7 +158,7 @@ class ArcGISMapView extends React.Component {
   addFeatureLayer = args => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.addFeatureLayerViaManager,
+      UIManager.getViewManagerConfig(moduleName).Commands.addFeatureLayerViaManager,
       [args]
     );
   };
@@ -165,15 +173,19 @@ class ArcGISMapView extends React.Component {
   componentWillUnmount() {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNArcGISMapView').Commands.dispose,
+      UIManager.getViewManagerConfig(moduleName).Commands.dispose,
       [args]
     );
   }
 }
 
 export const setLicenseKey = (string) => {
-  NativeModules.RNArcGISMapViewManager.setLicenseKey(string);
-};
+  if (Platform.OS === 'ios') {
+    NativeModules.RNEsriMapViewManager.setLicenseKey(string);
+  } else {
+    NativeModules.RNArcGISMapViewManager.setLicenseKey(string);
+  }
 
+};
 
 export default ArcGISMapView;
