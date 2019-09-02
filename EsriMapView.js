@@ -44,6 +44,7 @@ class RNEsriMapView extends React.Component {
     onOverlayWasRemoved: PropTypes.func,
     onOverlayWasModified: PropTypes.func,
 
+    onTapPopupButton: PropTypes.func,
     onMapDidLoad: PropTypes.func,
     onMapMoved: PropTypes.func,
     onSingleTap: PropTypes.func
@@ -55,6 +56,7 @@ class RNEsriMapView extends React.Component {
     maxZoom: 0,
     rotationEnabled: true,
     basemapUrl: '',
+    onTapPopupButton: () => {},
     onSingleTap: () => {},
     onOverlayWasAdded: () => {},
     onOverlayWasRemoved: () => {},

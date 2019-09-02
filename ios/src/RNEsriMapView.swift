@@ -14,6 +14,7 @@ import UIColor_Hex_Swift
 @objc(RNEsriMapView)
 public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   @objc var onSingleTap: RCTDirectEventBlock?
+  @objc var onTapPopupButton: RCTDirectEventBlock?
   @objc var onMapDidLoad: RCTDirectEventBlock?
   @objc var onMapMoved: RCTDirectEventBlock?
   
@@ -85,12 +86,15 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
         }
         
         for item in result {
-          if item.graphicsOverlay is RNEsriGraphicsOverlay, let closestGraphic = item.graphics.first
+          if item.graphicsOverlay is RNEsriGraphicsOverlay
           {
             if self?.recenterIfGraphicTapped ?? false {
               self?.setViewpointCenter(mapPoint, completion: nil)
               if let alert = item.graphics.first?.attributes["alert"] as! Alert? {
-                let popup = Popup(frame: UIScreen.main.bounds, title: alert.title, description:alert.description, closeText: alert.closeText, continueText:alert.continueText, continueCallback: { () in print("Hello, world!") })
+                let event: [AnyHashable: Any?] = [
+                  "referenceId": item.graphics.first?.attributes["referenceId"]
+                ]
+                let popup = Popup(frame: UIScreen.main.bounds, title: alert.title, description:alert.description, closeText: alert.closeText, continueText:alert.continueText, continueCallback: { () in self?.onTapPopupButton!(event as [AnyHashable: Any]) })
                 let window = UIApplication.shared.windows.last
                 window?.addSubview(popup)
               }

@@ -18,6 +18,8 @@ RCT_EXPORT_VIEW_PROPERTY(recenterIfGraphicTapped, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(minZoom, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(maxZoom, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(rotationEnabled, BOOL)
+
+RCT_EXPORT_VIEW_PROPERTY(onTapPopupButton, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onSingleTap, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onMapDidLoad, RCTDirectEventBlock)
 

@@ -77,6 +77,7 @@ const App = () => {
         }}
       >
         <EsriMapView
+          onTapPopupButton={(element) => alert(element.nativeEvent.referenceId)}
           ref={element => (mapView = element)}
           style={{ width: '100%', flex: 1 }}
           initialMapCenter={{ latitude: -30.30479, longitude: -53.286374, scale: 7, duration: 2 }}
@@ -84,6 +85,7 @@ const App = () => {
           rotationEnabled={false}
           mapBasemap={{ type: 'normal' }}
         />
+        
         <View
           style={{
             height: 56,
