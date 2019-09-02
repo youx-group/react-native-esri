@@ -18,13 +18,13 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class RNAGSGraphicsOverlay {
+public class RNEsriGraphicsOverlay {
     private GraphicsOverlay graphicsOverlay;
     private HashMap<String, String> pointImageDictionary;
     private String referenceId;
     private Boolean shouldAnimateUpdate = false;
 
-    public RNAGSGraphicsOverlay(ReadableMap rawData, GraphicsOverlay graphicsOverlay) {
+    public RNEsriGraphicsOverlay(ReadableMap rawData, GraphicsOverlay graphicsOverlay) {
         this.referenceId = rawData.getString("referenceId");
         ReadableArray pointImageDictionaryRaw = rawData.getArray("pointGraphics");
         pointImageDictionary = new HashMap<>();
@@ -80,7 +80,7 @@ public class RNAGSGraphicsOverlay {
         }
 
         if (args.hasKey("attributes")) {
-            attributes = RNAGSGraphicsOverlay.readableMapToMap(args.getMap("attributes"));
+            attributes = RNEsriGraphicsOverlay.readableMapToMap(args.getMap("attributes"));
             graphic.getAttributes().putAll(attributes);
 
         }
@@ -162,7 +162,7 @@ public class RNAGSGraphicsOverlay {
 
     private void addGraphicsLoop(ReadableMap map) {
         Point point = Point.fromRawData(map);
-        Graphic graphic = RNAGSGraphicsOverlay.rnPointToAGSGraphic(point, pointImageDictionary);
+        Graphic graphic = RNEsriGraphicsOverlay.rnPointToAGSGraphic(point, pointImageDictionary);
         graphicsOverlay.getGraphics().add(graphic);
     }
 
@@ -240,7 +240,7 @@ public class RNAGSGraphicsOverlay {
             Map<String, Object> map = null;
             if (rawData.hasKey("attributes")) {
                 ReadableMap rawMap = rawData.getMap("attributes");
-                map = RNAGSGraphicsOverlay.readableMapToMap(rawMap);
+                map = RNEsriGraphicsOverlay.readableMapToMap(rawMap);
             }
             Double rotation = 0.0;
             if (rawData.hasKey("rotation")) {

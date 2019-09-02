@@ -26,43 +26,43 @@ class RNEsriMapView extends React.Component {
   // MARK: Props
   static propTypes = {
     basemapUrl: PropTypes.string,
-    initialMapCenter: PropTypes.object,
-
-    addFeatureLayer: PropTypes.object,
-    removeFeatureLayer: PropTypes.string,
-
-    addGraphicsOverlay: PropTypes.object,
-    removeGraphicsOverlay: PropTypes.string,
-
+    initialMapCenter: PropTypes.arrayOf(PropTypes.object),
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
-
     rotationEnabled: PropTypes.bool,
     routeUrl: PropTypes.string,
-
     onOverlayWasAdded: PropTypes.func,
     onOverlayWasRemoved: PropTypes.func,
     onOverlayWasModified: PropTypes.func,
-
     onMapDidLoad: PropTypes.func,
     onMapMoved: PropTypes.func,
-    onSingleTap: PropTypes.func
+    onSingleTap: PropTypes.func,
+    addFeatureLayer: PropTypes.arrayOf(PropTypes.object),
+    onTapPopupButton: PropTypes.func,
   };
 
   static defaultProps = {
-    initialMapCenter: [{ latitude: 0, longitude: 0 }],
+    initialMapCenter: [
+      { latitude: -30.304790, longitude: -53.286374, scale: 7 }
+    ],
     minZoom: 0,
     maxZoom: 0,
     rotationEnabled: true,
     basemapUrl: '',
-    onSingleTap: () => {},
-    onOverlayWasAdded: () => {},
-    onOverlayWasRemoved: () => {},
-    onOverlayWasModified: () => {},
-    onMapDidLoad: () => {},
-    onMapMoved: () => {},
-    onRoutingStatusUpdate: () => {},
-    routeUrl: ''
+    onSingleTap: () => { },
+    onOverlayWasAdded: () => { },
+    onOverlayWasRemoved: () => { },
+    onOverlayWasModified: () => { },
+    onMapDidLoad: () => { },
+    onMapMoved: () => { },
+    onRoutingStatusUpdate: () => { },
+    onTapPopupButton: () => { },
+    routeUrl: '',
+    addFeatureLayer: [{
+      url: '',
+      outlineColor: '',
+      fillColor: ''
+    }]
   };
 
   isRouting = false;

@@ -9,14 +9,14 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.uimanager.UIManagerModule;
 
-public class RNArcGISMapViewModule extends ReactContextBaseJavaModule {
-    public RNArcGISMapViewModule(ReactApplicationContext context) {
+public class RNEsriMapViewModule extends ReactContextBaseJavaModule {
+    public RNEsriMapViewModule(ReactApplicationContext context) {
         super(context);
     }
 
     @Override
     public String getName() {
-        return "RNArcGISMapViewManager";
+        return "RNEsriMapViewManager";
     }
 
     @ReactMethod
@@ -24,8 +24,8 @@ public class RNArcGISMapViewModule extends ReactContextBaseJavaModule {
         UIManagerModule uiManagerModule = getReactApplicationContext().getNativeModule(UIManagerModule.class);
         uiManagerModule.addUIBlock(nativeViewHierarchyManager -> {
             View view = nativeViewHierarchyManager.resolveView(viewId);
-            if (view instanceof RNAGSMapView) {
-                Boolean result = ((RNAGSMapView) view).getRouteIsVisible();
+            if (view instanceof RNEsriMapView) {
+                Boolean result = ((RNEsriMapView) view).getRouteIsVisible();
                 callback.invoke(result);
             }
         });

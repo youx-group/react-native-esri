@@ -18,12 +18,12 @@ import com.esri.arcgisruntime.tasks.networkanalysis.Stop;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RNAGSRouter {
+public class RNEsriRouter {
     // MARK: Properties
     private RouteTask routeTask;
     private RouteParameters routeParameters;
 
-    public RNAGSRouter(Context context, String routeUrl) {
+    public RNEsriRouter(Context context, String routeUrl) {
         routeTask = new RouteTask(context, routeUrl);
         routeTask.loadAsync();
         routeTask.addDoneLoadingListener(() -> {

@@ -69,16 +69,16 @@ import java.util.concurrent.ExecutionException;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
-public class RNAGSMapView extends LinearLayout implements LifecycleEventListener {
+public class RNEsriMapView extends LinearLayout implements LifecycleEventListener {
     // MARK: Variables/Prop declarations
     View rootView;
     public MapView mapView;
     String basemapUrl = "";
     String routeUrl = "";
     Boolean recenterIfGraphicTapped = false;
-    HashMap<String, RNAGSGraphicsOverlay> rnGraphicsOverlays = new HashMap<>();
+    HashMap<String, RNEsriGraphicsOverlay> rnGraphicsOverlays = new HashMap<>();
     GraphicsOverlay routeGraphicsOverlay;
-    RNAGSRouter router;
+    RNEsriRouter router;
     private Callout callout;
     Double minZoom = 0.0;
     Double maxZoom = 0.0;
@@ -87,7 +87,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
     Graphic result;
 
     // MARK: Initializers
-    public RNAGSMapView(Context context) {
+    public RNEsriMapView(Context context) {
         super(context);
         rootView = inflate(context.getApplicationContext(),R.layout.rnags_mapview,this);
         mapView = rootView.findViewById(R.id.agsMapView);
@@ -158,7 +158,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
 
     public void setRouteUrl(String url) {
         routeUrl = url;
-        router = new RNAGSRouter(getContext().getApplicationContext(), routeUrl);
+        router = new RNEsriRouter(getContext().getApplicationContext(), routeUrl);
     }
 
     public void setRecenterIfGraphicTapped(boolean value) {
@@ -280,12 +280,12 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
     public void addGraphicsOverlay(ReadableMap args) {
         GraphicsOverlay graphicsOverlay = new GraphicsOverlay();
         mapView.getGraphicsOverlays().add(graphicsOverlay);
-        RNAGSGraphicsOverlay overlay = new RNAGSGraphicsOverlay(args, graphicsOverlay);
+        RNEsriGraphicsOverlay overlay = new RNEsriGraphicsOverlay(args, graphicsOverlay);
         rnGraphicsOverlays.put(overlay.getReferenceId(), overlay);
     }
 
     public void removeGraphicsOverlay(String removalId) {
-        RNAGSGraphicsOverlay overlay = rnGraphicsOverlays.get(removalId);
+        RNEsriGraphicsOverlay overlay = rnGraphicsOverlays.get(removalId);
         if (overlay == null) {
             Log.w("Warning (AGS)", "No overlay with the associated ID was found.");
             return;
@@ -305,7 +305,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
             shouldAnimateUpdate = args.getBoolean("animated");
         }
         String overlayReferenceId = args.getString("overlayReferenceId");
-        RNAGSGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
+        RNEsriGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
         if (overlay != null && args.hasKey("updates")){
             overlay.setShouldAnimateUpdate(shouldAnimateUpdate);
             overlay.updateGraphics(args.getArray("updates"));
@@ -318,7 +318,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
             return;
         }
         String overlayReferenceId = args.getString("overlayReferenceId");
-        RNAGSGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
+        RNEsriGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
         if (overlay != null && args.hasKey("points")) {
             overlay.addGraphics(args.getArray("points"));
         }
@@ -330,7 +330,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
             return;
         }
         String overlayReferenceId = args.getString("overlayReferenceId");
-        RNAGSGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
+        RNEsriGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
         if (overlay != null && args.hasKey("referenceIds")) {
             overlay.removeGraphics(args.getArray("referenceIds"));
         }
@@ -356,7 +356,7 @@ public class RNAGSMapView extends LinearLayout implements LifecycleEventListener
             return;
         }
         String overlayReferenceId = args.getString("overlayReferenceId");
-        RNAGSGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
+        RNEsriGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
         ArrayList<String> removeGraphics = new ArrayList<>();
         if(args.hasKey("excludeGraphics")) {
             ReadableArray rawArray = args.getArray("excludeGraphics");

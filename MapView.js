@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, Button } from 'react-native';
-import ArcGISMapView, { setLicenseKey } from './AGSMapView';
+import EsriMapView, { setLicenseKey } from './EsriMapView';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 
 class MapView extends React.Component {
@@ -10,21 +10,21 @@ class MapView extends React.Component {
 	}
 
 	async componentDidMount() {
-		const response = await fetch('http://homologacao.grd.geotech4web.com.br/public/ocorrencia/ativas/geojson');
-		let responseJson = await response.json();
+		// const response = await fetch('http://homologacao.grd.geotech4web.com.br/public/ocorrencia/ativas/geojson');
+		// let responseJson = await response.json();
 
 		let overlay = {};
 		let points = [];
 		let point = {}
 
-		responseJson.features.forEach((coord, index) => {
-			point.latitude = coord.geometry.coordinates[0];
-			point.longitude = coord.geometry.coordinates[1];
-			point.graphicId = coord.geometry.type.toLowerCase();
-			point.referenceId = String(index);
-			points.push(point);
-			point = {};
-		});
+		// responseJson.features.forEach((coord, index) => {
+		// 	point.latitude = coord.geometry.coordinates[0];
+		// 	point.longitude = coord.geometry.coordinates[1];
+		// 	point.graphicId = coord.geometry.type.toLowerCase();
+		// 	point.referenceId = String(index);
+		// 	points.push(point);
+		// 	point = {};
+		// });
 
 		point.latitude = -30.304790
 		point.longitude = -53.286374
@@ -59,7 +59,7 @@ class MapView extends React.Component {
 		const { navigate } = this.props.navigation;
 		return (
 			<View style={{ flex: 1 }}>
-				<ArcGISMapView
+				<EsriMapView
 					ref={mapView => this.mapView = mapView}
 					style={{ flex: 1 }}
 					initialMapCenter={[{ latitude: -30.304790, longitude: -53.286374, scale: 6 }]}

@@ -9,7 +9,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 
 import java.util.Map;
 
-public class RNArcGISMapViewManager extends SimpleViewManager<RNAGSMapView> {
+public class RNEsriMapViewManager extends SimpleViewManager<RNEsriMapView> {
     // MARK: Constants
     private final int SHOW_CALLOUT = 1;
     private final int CENTER_MAP = 2;
@@ -26,51 +26,51 @@ public class RNArcGISMapViewManager extends SimpleViewManager<RNAGSMapView> {
     // MARK Initializing methods
     @Override
     public String getName() {
-        return "RNArcGISMapView";
+        return "RNEsriMapView";
     }
 
     @Override
-    protected RNAGSMapView createViewInstance(ThemedReactContext reactContext) {
-        return new RNAGSMapView(reactContext);
+    protected RNEsriMapView createViewInstance(ThemedReactContext reactContext) {
+        return new RNEsriMapView(reactContext);
     }
 
     // MARK: Props
     @ReactProp(name = "basemapUrl")
-    public void setBasemapUrl(RNAGSMapView view, String url) {
+    public void setBasemapUrl(RNEsriMapView view, String url) {
         if (url != null && !url.isEmpty()) {
             view.setBasemapUrl(url);
         }
     }
 
     @ReactProp(name = "routeUrl")
-    public void setRouteUrl(RNAGSMapView view, String url) {
+    public void setRouteUrl(RNEsriMapView view, String url) {
         if (url != null && !url.isEmpty()) {
             view.setRouteUrl(url);
         }
     }
 
     @ReactProp(name = "initialMapCenter")
-    public void setInitialMapCenter(RNAGSMapView view, ReadableArray array) {
+    public void setInitialMapCenter(RNEsriMapView view, ReadableArray array) {
         view.setInitialMapCenter(array);
     }
 
     @ReactProp(name = "recenterIfGraphicTapped", defaultBoolean = false)
-    public void setRecenterIfGraphicTapped(RNAGSMapView view, Boolean value){
+    public void setRecenterIfGraphicTapped(RNEsriMapView view, Boolean value){
         view.setRecenterIfGraphicTapped(value);
     }
 
     @ReactProp(name= "minZoom")
-    public void setMinZoom(RNAGSMapView view, double value) {
+    public void setMinZoom(RNEsriMapView view, double value) {
         view.setMinZoom(value);
     }
 
     @ReactProp(name= "maxZoom")
-    public void setMaxZoom(RNAGSMapView view, double value) {
+    public void setMaxZoom(RNEsriMapView view, double value) {
         view.setMaxZoom(value);
     }
 
     @ReactProp(name= "rotationEnabled")
-    public void setRotationEnabled(RNAGSMapView view, Boolean value) {
+    public void setRotationEnabled(RNEsriMapView view, Boolean value) {
         view.setRotationEnabled(value);
     }
 
@@ -95,7 +95,7 @@ public class RNArcGISMapViewManager extends SimpleViewManager<RNAGSMapView> {
     }
 
     @Override
-    public void receiveCommand(RNAGSMapView mapView, int command, ReadableArray args) {
+    public void receiveCommand(RNEsriMapView mapView, int command, ReadableArray args) {
         Assertions.assertNotNull(mapView);
         Assertions.assertNotNull(args);
         switch (command) {
