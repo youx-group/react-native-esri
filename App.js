@@ -50,13 +50,15 @@ const overlay1 = {
       longitude: -52.97607421875,
       latitude: -28.246327971048842,
       rotation: 0,
-      graphicId: 'point'
+      graphicId: 'point',
+      referenceId: '24'
     },
     {
       longitude: -53.052978515625,
       latitude: -30.533876572997617,
       rotation: 0,
-      graphicId: 'point'
+      graphicId: 'point',
+      referenceId: '69'
     }
   ]
 };
@@ -77,7 +79,7 @@ const App = () => {
         }}
       >
         <EsriMapView
-          onTapPopupButton={(element) => alert(element.nativeEvent.referenceId)}
+          onSingleTap={(element)=> element.nativeEvent.referenceId && alert(element.nativeEvent.referenceId)}
           ref={element => (mapView = element)}
           style={{ width: '100%', flex: 1 }}
           initialMapCenter={{ latitude: -30.30479, longitude: -53.286374, scale: 7, duration: 2 }}
