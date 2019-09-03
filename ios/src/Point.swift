@@ -35,7 +35,6 @@ public class Point {
     self.imageId = rawData["graphicId"] as? NSString
     
     self.referenceId = rawData["referenceId"] as? NSString ?? nil
-    
     if let tempAlert  = rawData["alert"] as! NSDictionary? {
       self.alert = Alert(rawData: tempAlert)
     }

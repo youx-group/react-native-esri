@@ -15,10 +15,14 @@ public class Line{
   let points : [AGSPoint]
   let outline : UIColor
   
-  init(_points:[AGSPoint], _outline: String, _referenceId:NSString){
-    points = _points
-    outline = UIColor(_outline)
-    referenceId = _referenceId
+  let alert: Alert?
+  
+  init(_points:[AGSPoint], _outline: String, _referenceId:NSString, _alert:Alert){
+    self.points = _points
+    self.outline = UIColor(_outline)
+    self.referenceId = _referenceId
+    
+    self.alert = _alert
   }
   
   init(rawData: NSDictionary){
@@ -30,6 +34,13 @@ public class Line{
     self.points = _points
     self.outline = UIColor(rawData["outlineColor"] as! String)
     self.referenceId = rawData["referenceId"] as? NSString ?? nil
+    
+    if let tempAlert  = rawData["alert"] as! NSDictionary? {
+      self.alert = Alert(rawData: tempAlert)
+    }
+    else {
+      self.alert = nil
+    }
   }
   
   func toAGSPolyline() -> AGSPolyline{
@@ -45,6 +56,9 @@ public class Line{
     if let referenceId = self.referenceId
     {
       polylineGraphic.attributes["referenceId"] = referenceId
+    }
+    if let alert = self.alert {
+      polylineGraphic.attributes["alert"] = alert
     }
     
     return polylineGraphic
