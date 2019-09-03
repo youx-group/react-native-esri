@@ -80,6 +80,7 @@ const App = () => {
       >
         <EsriMapView
           onSingleTap={(element)=> element.nativeEvent.referenceId && alert(element.nativeEvent.referenceId)}
+          onTapPopupButton={(element) => alert(element.nativeEvent.referenceId)}
           ref={element => (mapView = element)}
           style={{ width: '100%', flex: 1 }}
           initialMapCenter={{ latitude: -30.30479, longitude: -53.286374, scale: 7, duration: 2 }}
