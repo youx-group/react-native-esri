@@ -85,7 +85,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
     // MARK: Initializers
     public RNEsriMapView(Context context) {
         super(context);
-        rootView = inflate(context.getApplicationContext(),R.layout.rnags_mapview,this);
+        rootView = inflate(context.getApplicationContext(), R.layout.rnags_mapview, this);
         mapView = rootView.findViewById(R.id.agsMapView);
         if (context instanceof ReactContext) {
             ((ReactContext) context).addLifecycleEventListener(this);
@@ -98,7 +98,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
         // We want to create the callout right after the View has finished its layout
         mapView.post(() -> {
             callout = mapView.getCallout();
-            callout.setContent(inflate(getContext().getApplicationContext(),R.layout.rnags_callout_content, null));
+            callout.setContent(inflate(getContext().getApplicationContext(), R.layout.rnags_callout_content, null));
             Callout.ShowOptions showOptions = new Callout.ShowOptions();
             showOptions.setAnimateCallout(true);
             showOptions.setAnimateRecenter(true);
@@ -116,7 +116,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
     @SuppressLint("ClickableViewAccessibility")
     public void setUpMap() {
         mapView.setMap(new ArcGISMap(Basemap.Type.STREETS_VECTOR, -30.304790, -53.286374, 17));
-        mapView.setOnTouchListener(new OnSingleTouchListener(getContext(),mapView));
+        mapView.setOnTouchListener(new OnSingleTouchListener(getContext(), mapView));
         routeGraphicsOverlay = new GraphicsOverlay();
         mapView.getGraphicsOverlays().add(routeGraphicsOverlay);
         mapView.getMap().addDoneLoadingListener(() -> {
@@ -124,17 +124,17 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
             Boolean success = e != null;
             String errorMessage = !success ? "" : e.getMessage();
             WritableMap map = Arguments.createMap();
-            map.putBoolean("success",success);
-            map.putString("errorMessage",errorMessage);
+            map.putBoolean("success", success);
+            map.putString("errorMessage", errorMessage);
 
-            emitEvent("onMapDidLoad",map);
+            emitEvent("onMapDidLoad", map);
         });
     }
 
     // MARK: Prop set methods
     public void setBasemapUrl(String url) {
         basemapUrl = url;
-        if(basemapUrl == null || basemapUrl.isEmpty()) {
+        if (basemapUrl == null || basemapUrl.isEmpty()) {
             return;
         }
         // Set basemap of map
@@ -203,13 +203,13 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
         String text = "";
         Boolean shouldRecenter = false;
 
-        if(args.hasKey("title")) {
+        if (args.hasKey("title")) {
             title = args.getString("title");
         }
-        if(args.hasKey("text")) {
+        if (args.hasKey("text")) {
             text = args.getString("text");
         }
-        if(args.hasKey("shouldRecenter")) {
+        if (args.hasKey("shouldRecenter")) {
             shouldRecenter = args.getBoolean("shouldRecenter");
         }
 
@@ -222,7 +222,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
         ((TextView) calloutContent.findViewById(R.id.text)).setText(text);
         callout.setLocation(agsPoint);
         callout.show();
-        Log.i("AGS",callout.isShowing()+" " + calloutContent.getWidth() + " " + calloutContent.getHeight());
+        Log.i("AGS", callout.isShowing() + " " + calloutContent.getWidth() + " " + calloutContent.getHeight());
         if (shouldRecenter) {
             mapView.setViewpointCenterAsync(agsPoint);
         }
@@ -230,21 +230,21 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
 
     public void centerMap(ReadableArray args) {
         final ArrayList<Point> points = new ArrayList<>();
-        for (int i = 0; i <  args.size(); i++) {
+        for (int i = 0; i < args.size(); i++) {
             ReadableMap item = args.getMap(i);
             if (item == null) {
                 continue;
             }
             Double latitude = item.getDouble("latitude");
             Double longitude = item.getDouble("longitude");
-            if(latitude == 0 || longitude == 0) {
+            if (latitude == 0 || longitude == 0) {
                 continue;
             }
             points.add(new Point(longitude, latitude, SpatialReferences.getWgs84()));
         }
         // Perform the recentering
         if (points.size() == 1) {
-            mapView.setViewpointCenterAsync(points.get(0),60000);
+            mapView.setViewpointCenterAsync(points.get(0), 60000);
         } else if (points.size() > 1) {
             PointCollection pointCollection = new PointCollection(points);
             Polygon polygon = new Polygon(pointCollection);
@@ -256,7 +256,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
     public void addFeatureLayer(ReadableMap args) {
         ArcGISMap map = mapView.getMap();
 
-        if(args == null) {
+        if (args == null) {
             return;
         }
 
@@ -297,12 +297,12 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
             return;
         }
         Boolean shouldAnimateUpdate = false;
-        if(args.hasKey("animated")) {
+        if (args.hasKey("animated")) {
             shouldAnimateUpdate = args.getBoolean("animated");
         }
         String overlayReferenceId = args.getString("overlayReferenceId");
         RNEsriGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
-        if (overlay != null && args.hasKey("updates")){
+        if (overlay != null && args.hasKey("updates")) {
             overlay.setShouldAnimateUpdate(shouldAnimateUpdate);
             overlay.updateGraphics(args.getArray("updates"));
         }
@@ -344,7 +344,8 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
     // Routing
     public void routeGraphicsOverlay(ReadableMap args) {
         if (router == null) {
-            Log.w("Warning (AGS)", "Router has not been initialized. Perhaps no route URL was provided? Route URL:" + routeUrl);
+            Log.w("Warning (AGS)",
+                    "Router has not been initialized. Perhaps no route URL was provided? Route URL:" + routeUrl);
             return;
         }
         if (!args.hasKey("overlayReferenceId")) {
@@ -354,9 +355,9 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
         String overlayReferenceId = args.getString("overlayReferenceId");
         RNEsriGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
         ArrayList<String> removeGraphics = new ArrayList<>();
-        if(args.hasKey("excludeGraphics")) {
+        if (args.hasKey("excludeGraphics")) {
             ReadableArray rawArray = args.getArray("excludeGraphics");
-            for (Object item: rawArray.toArrayList()) {
+            for (Object item : rawArray.toArrayList()) {
                 removeGraphics.add(((String) item));
             }
         }
@@ -367,9 +368,10 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
             color = "#FF0000";
         }
         assert overlay != null;
-        ListenableFuture<RouteResult> future = router.createRoute(overlay.getAGSGraphicsOverlay(),removeGraphics);
+        ListenableFuture<RouteResult> future = router.createRoute(overlay.getAGSGraphicsOverlay(), removeGraphics);
         if (future == null) {
-            Log.w("Warning (AGS)", "There was an issue creating the route. Please try again later, or check your routing server.");
+            Log.w("Warning (AGS)",
+                    "There was an issue creating the route. Please try again later, or check your routing server.");
             return;
         }
         setIsRouting(true);
@@ -380,7 +382,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
                     Route route = result.getRoutes().get(0);
                     drawRoute(route, color);
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 setIsRouting(false);
@@ -389,7 +391,8 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
     }
 
     private void setIsRouting(Boolean value) {
-        ((ReactContext) getContext()).getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("isRoutingChanged",value);
+        ((ReactContext) getContext()).getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("isRoutingChanged", value);
     }
 
     private void drawRoute(Route route, String color) {
@@ -398,26 +401,21 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
             return;
         }
         routeGraphicsOverlay.getGraphics().clear();
-        SimpleLineSymbol symbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.parseColor(color),5);
+        SimpleLineSymbol symbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.parseColor(color), 5);
         Polyline polyline = route.getRouteGeometry();
-        Graphic routeGraphic = new Graphic(route.getRouteGeometry(),symbol);
+        Graphic routeGraphic = new Graphic(route.getRouteGeometry(), symbol);
         routeGraphicsOverlay.getGraphics().add(routeGraphic);
     }
 
     // MARK: Event emitting
     public void emitEvent(String eventName, WritableMap args) {
-        ((ReactContext) getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(
-                getId(),
-                eventName,
-                args
-        );
+        ((ReactContext) getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(getId(), eventName, args);
     }
-
 
     // MARK: OnTouchListener
     public class OnSingleTouchListener extends DefaultMapViewOnTouchListener {
-        OnSingleTouchListener(Context context, MapView mMapView){
-            super(context,mMapView);
+        OnSingleTouchListener(Context context, MapView mMapView) {
+            super(context, mMapView);
         }
 
         @Override
@@ -428,18 +426,19 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
                 return true;
             }
         }
+
         @Override
         public boolean onDown(MotionEvent e) {
             WritableMap map = createPointMap(e);
-            emitEvent("onMapMoved",map);
+            emitEvent("onMapMoved", map);
             return true;
         }
 
-        private WritableMap createPointMap(MotionEvent e){
+        private WritableMap createPointMap(MotionEvent e) {
             android.graphics.Point screenPoint = new android.graphics.Point(((int) e.getX()), ((int) e.getY()));
             WritableMap screenPointMap = Arguments.createMap();
-            screenPointMap.putInt("x",screenPoint.x);
-            screenPointMap.putInt("y",screenPoint.y);
+            screenPointMap.putInt("x", screenPoint.x);
+            screenPointMap.putInt("y", screenPoint.y);
             Point mapPoint = mMapView.screenToLocation(screenPoint);
             WritableMap mapPointMap = Arguments.createMap();
             if (mapPoint != null) {
@@ -449,7 +448,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
             }
             WritableMap map = Arguments.createMap();
             map.putMap("screenPoint", screenPointMap);
-            map.putMap("mapPoint",mapPointMap);
+            map.putMap("mapPoint", mapPointMap);
             return map;
         }
 
@@ -459,8 +458,8 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
             WritableMap mapForAction = createPointMap(e);
             android.graphics.Point screenPoint = new android.graphics.Point(((int) e.getX()), ((int) e.getY()));
 
-
-            ListenableFuture<List<IdentifyGraphicsOverlayResult>> future = mMapView.identifyGraphicsOverlaysAsync(screenPoint,15, false);
+            ListenableFuture<List<IdentifyGraphicsOverlayResult>> future = mMapView
+                    .identifyGraphicsOverlaysAsync(screenPoint, 15, false);
             future.addDoneListener(() -> {
                 try {
                     if (!future.get().isEmpty()) {
@@ -470,36 +469,42 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
                         // More null checking >.>
                         if (!graphicResult.isEmpty()) {
                             result = graphicResult.get(0);
-                            map.putString("graphicReferenceId", Objects.requireNonNull(result.getAttributes().get("referenceId")).toString());
+                            map.putString("graphicReferenceId",
+                                    Objects.requireNonNull(result.getAttributes().get("referenceId")).toString());
                             if (recenterIfGraphicTapped) {
 
                                 // Center the map on tap
                                 mapView.setViewpointCenterAsync(((Point) result.getGeometry()));
 
-                                // If there is no alert, the popup is setted and the callback of the onTapPopupButton its called
-                                if(result.getAttributes().get("title") != null) {
-                                    // Set the custom view for the popup
-                                    LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                                    View customView = inflater.inflate(R.layout.custom_layout, null);
+                            }
 
-                                    setPopupWindow(customView, result);
-                                    setPopupCloseButton(customView);
-                                    setPopupActionButton(customView, mapForAction);
-                                }
+                            // If has a alert (popup), the popup is setted and the callback of the
+                            // onTapPopupButton its called
+                            if (result.getAttributes().get("title") != null) {
+                                // Set the custom view for the popup
+                                LayoutInflater inflater = (LayoutInflater) getContext()
+                                        .getSystemService(LAYOUT_INFLATER_SERVICE);
+                                View customView = inflater.inflate(R.layout.custom_layout, null);
 
+                                setPopupWindow(customView, result);
+                                setPopupCloseButton(customView);
+                                setPopupActionButton(customView, mapForAction);
                             }
                         }
                     }
                 } catch (InterruptedException | ExecutionException exception) {
                     exception.printStackTrace();
                 } finally {
-                    // If there is no alert, its called the callback of the onSingleTap
-                    if(result.getAttributes().get("title") == null) {
-                        emitEvent("onSingleTap", map);
+                    // Check if result is not null, result is not null, if the user clicked on a
+                    // valid marker
+                    // Then, check is there is a alert (popup), if not, call the onSingleTap
+                    if (result != null) {
+                        if (result.getAttributes().get("title") == null) {
+                            emitEvent("onSingleTap", map);
+                        }
                     }
                 }
             });
-
 
             return true;
         }
@@ -507,12 +512,6 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
 
     // MARK: Popup configs
     public void setPopupWindow(View customView, Graphic result) {
-
-//        if (!args.hasKey("overlayReferenceId")) {
-//            Log.w("Warning (AGS)", "No overlay with the associated ID was found.");
-//            return;
-//        }
-//        String overlayReferenceId = args.getString("overlayReferenceId");
 
         // Set the informations on popup that comes from the point object
         TextView textView = customView.findViewById(R.id.tv);
@@ -523,13 +522,9 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
 
         textView.setText(description);
 
-        mPopupWindow = new PopupWindow(
-                customView,
-                LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT
-        );
+        mPopupWindow = new PopupWindow(customView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-        if(Build.VERSION.SDK_INT>=21){
+        if (Build.VERSION.SDK_INT >= 21) {
             mPopupWindow.setElevation(5.0f);
         }
 
@@ -541,7 +536,6 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
         mPopupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
 
     }
-
 
     public void setPopupCloseButton(View customView) {
 
@@ -555,14 +549,14 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
 
     }
 
-
     public void setPopupActionButton(View customView, WritableMap mapForAction) {
 
         // Popup action button
         Button button = (Button) customView.findViewById(R.id.button);
         button.setText("Detalhes");
 
-        // Add listener for this button, when clicked, a callback in the React, receives a event
+        // Add listener for this button, when clicked, a callback in the React, receives
+        // a event
         // Just like the onSingleTap
         button.setOnClickListener(view -> {
             // Dismiss the popup window
@@ -597,10 +591,8 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
         Envelope envelope = polygon.getExtent();
         Double paddingWidth = envelope.getWidth() * 0.5;
         Double paddingHeight = envelope.getHeight() * 0.5;
-        return new Viewpoint(new Envelope(
-                envelope.getXMin() - paddingWidth, envelope.getYMax() + paddingHeight,
-                envelope.getXMax() + paddingWidth, envelope.getYMin() - paddingHeight,
-                SpatialReferences.getWgs84()), 0);
+        return new Viewpoint(new Envelope(envelope.getXMin() - paddingWidth, envelope.getYMax() + paddingHeight,
+                envelope.getXMax() + paddingWidth, envelope.getYMin() - paddingHeight, SpatialReferences.getWgs84()),
+                0);
     }
 }
-
