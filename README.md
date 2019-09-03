@@ -143,6 +143,6 @@ polygons: [
 - 🍏 [iOS & JS] João Victor Teófilo [@teofilosalgado](https://www.linkedin.com/in/jo%C3%A3o-victor-t-salgado/)
 - 🤖 [Android & JS] Leonardo Almeida [@leonardofalmeida](https://www.linkedin.com/in/leonardofalmeida/)
 
-# License
+## License
 
 _The ArcGIS SDK for Android/iOS and the ArcGIS logo are properties of [Esri](https://developers.arcgis.com/) 2019, all rights reserved._
