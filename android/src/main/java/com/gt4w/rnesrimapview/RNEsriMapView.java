@@ -469,7 +469,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
                         // More null checking >.>
                         if (!graphicResult.isEmpty()) {
                             result = graphicResult.get(0);
-                            map.putString("graphicReferenceId",
+                            map.putString("referenceId",
                                     Objects.requireNonNull(result.getAttributes().get("referenceId")).toString());
                             if (recenterIfGraphicTapped) {
 
