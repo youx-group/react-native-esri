@@ -32,7 +32,7 @@ removeFeatureLayer(<id>)
 ```
 addGraphicsOverlay(
   {
-    referenceId: <id>,
+    referenceId?: <id>,
     pointGraphics?: <pointGraphics>,
     points?: <point>,
     lines?: <line>,
@@ -50,8 +50,17 @@ removeGraphicsOverlay(<id>)
 - **url**: a string pointing to a web service that retrieves a compatible ArcGIS feature layer.
 - **color**: a hexadecimal color string to set correspondent element color
 - **id**: a string to reference elements during lifecycle
-- **pointGraphics**: an array used to define available marker graphics, containing the following fields:
+- **alert** an object that represents a popup to be rendered when the element is touched, containing the following fields:
+```
+alert: {
+  title: 'Alert title',
+  description: 'Alert body',
+  closeText: 'Close button text',
+  continueText: 'Confirm button text'
+},
+```
 
+- **pointGraphics**: an array used to define available marker graphics, containing the following fields:
 ```
 import { Image } from 'react-native';
 pointGraphics: [
@@ -67,22 +76,29 @@ pointGraphics: [
 ```
 points: [
   {
+    
     longitude: -54.744873046875,
     latitude: -29.382175075145277,
     rotation: 0,
     graphicId: 'point',
+    referenceId?: <id>,
+    alert:<alert>
   },
   {
     longitude: -52.97607421875,
     latitude: -28.246327971048842,
     rotation: 0,
-    graphicId: 'point'
+    graphicId: 'point',
+    referenceId?: <id>,
+    alert:<alert>
   },
   {
     longitude: -53.052978515625,
     latitude: -30.533876572997617,
     rotation: 0,
-    graphicId: 'point'
+    graphicId: 'point',
+    referenceId?: <id>,
+    alert:<alert>
   }
 ]
 
@@ -97,7 +113,9 @@ lines: [
       { longitude: -55.294189453125, latitude: -29.983486718474694 },
       { longitude: -51.910400390625, latitude: -30.12612436422458 },
     ],
-    outlineColor: '#00897b'
+    outlineColor: '#00897b',
+    referenceId?: <id>,
+    alert:<alert>
   }
 ]
 ```
@@ -114,14 +132,16 @@ polygons: [
       { longitude: -55.294189453125, latitude: -29.983486718474694 }
     ],
     fillColor: '#0c819c40',
-    outlineColor: '#00897b'
+    outlineColor: '#00897b',
+    referenceId?: <id>,
+    alert:<alert>
   }
 ]
 ```
 
 ## Authors
-- João Teófilo [@teofilosalgado](https://www.linkedin.com/in/jo%C3%A3o-victor-t-salgado/)
-- Leonardo Almeida [@leonardofalmeida](https://www.linkedin.com/in/leonardofalmeida/)
+- 🍏 [iOS & JS] João Victor Teófilo [@teofilosalgado](https://www.linkedin.com/in/jo%C3%A3o-victor-t-salgado/)
+- 🤖 [Android & JS] Leonardo Almeida [@leonardofalmeida](https://www.linkedin.com/in/leonardofalmeida/)
 
 # License
 
