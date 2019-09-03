@@ -143,6 +143,9 @@ polygons: [
 ## Events
 ```
 onSingleTap={<tapEvent>}
+```
+
+```
 onTapPopupButton={<tapEvent>}
 ```
 
