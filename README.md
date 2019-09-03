@@ -11,8 +11,10 @@
 - Render `polygon`s, `line`s and `marker`s with custom assets and properties
 - Render `featureLayer`s from web servicewith custom properties
 - Customize fills and outlines color of rendered objects
+- Events for touch and map drag
+- Popups
 
-## Available Functions:
+## Functions:
 
 ```
 addFeatureLayer(
@@ -46,7 +48,6 @@ removeGraphicsOverlay(<id>)
 ```
 
 ### Where:
-
 - **url**: a string pointing to a web service that retrieves a compatible ArcGIS feature layer.
 - **color**: a hexadecimal color string to set correspondent element color
 - **id**: a string to reference elements during lifecycle
@@ -138,6 +139,16 @@ polygons: [
   }
 ]
 ```
+
+## Events
+```
+onSingleTap={<tapEvent>}
+onTapPopupButton={<tapEvent>}
+```
+
+### Where:
+- **tapEvent**: a react native event, containing `mapPoint` and `screenPoint` objects inside the `nativeEvent` object, with an optional `referenceId`, returned when the touched element have one.
+
 
 ## Authors
 - 🍏 [iOS & JS] João Victor Teófilo [@teofilosalgado](https://www.linkedin.com/in/jo%C3%A3o-victor-t-salgado/)
