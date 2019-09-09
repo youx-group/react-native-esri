@@ -1,19 +1,24 @@
 package com.gt4w.rnesrimapview;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.PointCollection;
+import com.esri.arcgisruntime.geometry.Polygon;
 import com.esri.arcgisruntime.geometry.SpatialReferences;
 import com.esri.arcgisruntime.mapping.view.Graphic;
 import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import com.esri.arcgisruntime.symbology.PictureMarkerSymbol;
+import com.esri.arcgisruntime.symbology.SimpleFillSymbol;
+import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,9 +44,57 @@ public class RNEsriGraphicsOverlay {
             }
         }
         // Create graphics within overlay
-        ReadableArray rawPoints = rawData.getArray("points");
-        for (int i = 0; i < rawPoints.size(); i++) {
-            addGraphicsLoop(rawPoints.getMap(i));
+        if (rawData.hasKey("points")) {
+            ReadableArray rawPoints = rawData.getArray("points");
+            for (int i = 0; i < rawPoints.size(); i++) {
+                addGraphicsLoop(rawPoints.getMap(i));
+
+            }
+        }
+
+        // If the geometry was a polygon
+        if (rawData.hasKey("polygons")) {
+
+            // Get the array of polygons
+            ReadableArray rawPoints = rawData.getArray("polygons");
+
+            // Get the points
+            ReadableMap item = rawPoints.getMap(0);
+
+            PointCollection polygonPoints = new PointCollection(SpatialReferences.getWgs84());
+
+            for (int i = 0; i < item.getArray("points").size(); i++) {
+
+                // Create a point, with the latitude and longitude of the point
+                com.esri.arcgisruntime.geometry.Point point = new com.esri.arcgisruntime.geometry.Point(
+                        item.getArray("points").getMap(i).getDouble("latitude"),
+                        item.getArray("points").getMap(i).getDouble("longitude"));
+
+                polygonPoints.add(point);
+
+            }
+
+            // Create the polygon, with the points
+            Polygon polygon = new Polygon(polygonPoints);
+
+            // Style of the polygon
+            SimpleFillSymbol polygonSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.NULL, Color.rgb(226, 119, 40),
+                    new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 2.0f));
+
+            // Get the reference id
+            String referenceId = rawData.getString("referenceId");
+
+            // Create the attributes, where you can put some information about the polygon,
+            // like the referenceID
+            Map<String, Object> attributes = new HashMap<>();
+
+            Graphic graphic = new Graphic(polygon, attributes, polygonSymbol);
+
+            // Put the referenceID in the grphics attributes
+            graphic.getAttributes().put("referenceId", referenceId);
+
+            // Render the polygon
+            graphicsOverlay.getGraphics().add(graphic);
 
         }
     }
@@ -101,9 +154,11 @@ public class RNEsriGraphicsOverlay {
             rotation = args.getDouble("rotation");
         }
         if (shouldAnimateUpdate) {
-            Float initialRotation = (graphic.getSymbol() != null && graphic.getSymbol() instanceof PictureMarkerSymbol) ?
-                    ((PictureMarkerSymbol) graphic.getSymbol()).getAngle() : 0;
-            animateUpdate(graphic, ((com.esri.arcgisruntime.geometry.Point) graphic.getGeometry()), agsPoint, initialRotation, rotation.floatValue());
+            Float initialRotation = (graphic.getSymbol() != null && graphic.getSymbol() instanceof PictureMarkerSymbol)
+                    ? ((PictureMarkerSymbol) graphic.getSymbol()).getAngle()
+                    : 0;
+            animateUpdate(graphic, ((com.esri.arcgisruntime.geometry.Point) graphic.getGeometry()), agsPoint,
+                    initialRotation, rotation.floatValue());
 
         } else {
             graphic.setGeometry(agsPoint);
@@ -115,8 +170,9 @@ public class RNEsriGraphicsOverlay {
 
     private int maxTimesFired = 10;
     private int timerDuration = 500;
-    private void animateUpdate(Graphic graphic, com.esri.arcgisruntime.geometry.Point fromPoint, com.esri.arcgisruntime.geometry.Point toPoint,
-                               Float fromRotation, Float toRotation){
+
+    private void animateUpdate(Graphic graphic, com.esri.arcgisruntime.geometry.Point fromPoint,
+            com.esri.arcgisruntime.geometry.Point toPoint, Float fromRotation, Float toRotation) {
         // Run animation
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -125,16 +181,16 @@ public class RNEsriGraphicsOverlay {
                 Double dx = (toPoint.getX() - fromPoint.getX()) / maxTimesFired;
                 Double dy = (toPoint.getY() - fromPoint.getY()) / maxTimesFired;
                 Float dTheta = (toRotation - fromRotation) / maxTimesFired;
-                PictureMarkerSymbol  symbol = null;
+                PictureMarkerSymbol symbol = null;
                 if (graphic.getSymbol() instanceof PictureMarkerSymbol) {
                     symbol = ((PictureMarkerSymbol) graphic.getSymbol());
                 }
 
-                for(int timesFired = 0; timesFired < maxTimesFired; timesFired++) {
+                for (int timesFired = 0; timesFired < maxTimesFired; timesFired++) {
                     Double x = fromPoint.getX() + (dx * timesFired);
                     Double y = fromPoint.getY() + (dy * timesFired);
                     Float rotation = fromRotation + (dTheta * timesFired);
-                    graphic.setGeometry(new com.esri.arcgisruntime.geometry.Point(x,y,SpatialReferences.getWgs84()));
+                    graphic.setGeometry(new com.esri.arcgisruntime.geometry.Point(x, y, SpatialReferences.getWgs84()));
                     if (symbol != null) {
                         symbol.setAngle(rotation);
                     }
@@ -150,7 +206,7 @@ public class RNEsriGraphicsOverlay {
                 }
                 timer.cancel();
             }
-        },0,timerDuration);
+        }, 0, timerDuration);
 
     }
 
@@ -182,7 +238,8 @@ public class RNEsriGraphicsOverlay {
 
     // MARK: Static methods
     public static Graphic rnPointToAGSGraphic(Point point, Map<String, String> pointImageDictionary) {
-        com.esri.arcgisruntime.geometry.Point agsPoint = new com.esri.arcgisruntime.geometry.Point(point.getLongitude(), point.getLatitude(), SpatialReferences.getWgs84());
+        com.esri.arcgisruntime.geometry.Point agsPoint = new com.esri.arcgisruntime.geometry.Point(point.getLongitude(),
+                point.getLatitude(), SpatialReferences.getWgs84());
         Graphic result;
         if (point.getGraphicId() != null && pointImageDictionary.get(point.getGraphicId()) != null) {
             String imageUri = pointImageDictionary.get(point.getGraphicId());
@@ -203,7 +260,7 @@ public class RNEsriGraphicsOverlay {
         }
         result.getAttributes().put("referenceId", point.getReferenceId());
 
-        if(point.getAlert() != null) {
+        if (point.getAlert() != null) {
             Map<String, Object> alertTransformedToMap = readableMapToMap(point.getAlert());
             result.getAttributes().put("title", alertTransformedToMap.get("title"));
             result.getAttributes().put("description", alertTransformedToMap.get("description"));
@@ -254,19 +311,12 @@ public class RNEsriGraphicsOverlay {
             if (rawData.hasKey("alert")) {
                 alert = rawData.getMap("alert");
             }
-            return new Point(
-                    rawData.getDouble("latitude"),
-                    rawData.getDouble("longitude"),
-                    rotation,
-                    rawData.getString("referenceId"),
-                    map,
-                    graphicId,
-                    alert
-            );
+            return new Point(rawData.getDouble("latitude"), rawData.getDouble("longitude"), rotation,
+                    rawData.getString("referenceId"), map, graphicId, alert);
         }
 
         private Point(Double latitude, Double longitude, Double rotation, String referenceId,
-                      Map<String, Object> attributes, String graphicId, ReadableMap alert) {
+                Map<String, Object> attributes, String graphicId, ReadableMap alert) {
             this.latitude = latitude;
             this.longitude = longitude;
             this.rotation = rotation;
@@ -334,4 +384,3 @@ public class RNEsriGraphicsOverlay {
         }
     }
 }
-
