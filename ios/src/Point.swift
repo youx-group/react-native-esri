@@ -18,14 +18,14 @@ public class Point {
   
   let alert: Alert?
   
-  init(_latitude: NSNumber, _longitude: NSNumber, _rotation: NSNumber?, _attributes: [String: Any]?, _referenceId: NSString?, _imageId: NSString?, alert: Alert) {
+  init(_latitude: NSNumber, _longitude: NSNumber, _rotation: NSNumber?, _attributes: [String: Any]?, _referenceId: NSString?, _imageId: NSString?, _alert: Alert) {
     self.latitude = _latitude
     self.longitude = _longitude
     self.rotation = _rotation
     self.imageId = _imageId
     
     self.referenceId = _referenceId
-    self.alert = alert
+    self.alert = _alert
   }
   
   init(rawData: NSDictionary) {
@@ -35,7 +35,6 @@ public class Point {
     self.imageId = rawData["graphicId"] as? NSString
     
     self.referenceId = rawData["referenceId"] as? NSString ?? nil
-    
     if let tempAlert  = rawData["alert"] as! NSDictionary? {
       self.alert = Alert(rawData: tempAlert)
     }

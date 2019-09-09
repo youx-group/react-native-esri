@@ -14,6 +14,7 @@ import UIColor_Hex_Swift
 @objc(RNEsriMapView)
 public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   @objc var onSingleTap: RCTDirectEventBlock?
+  @objc var onTapPopupButton: RCTDirectEventBlock?
   @objc var onMapDidLoad: RCTDirectEventBlock?
   @objc var onMapMoved: RCTDirectEventBlock?
   
@@ -68,36 +69,37 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
     self.callout.dismiss()
     if onSingleTap != nil {
       let latLongPoint = AGSGeometryEngine.projectGeometry(mapPoint, to: AGSSpatialReference.wgs84()) as! AGSPoint
+      
       var reactResult: [AnyHashable: Any] = [
         "mapPoint": ["latitude" : latLongPoint.y, "longitude": latLongPoint.x],
         "screenPoint" : ["x": screenPoint.x, "y": screenPoint.y]
       ]
-      self.identifyGraphicsOverlays(atScreenPoint: screenPoint, tolerance: 15, returnPopupsOnly: false) { [weak self] (result, error) in
-        if let error = error {
-          reactResult["success"] = false
-          reactResult["errorMessage"] = error.localizedDescription
-        } else {
-          reactResult["success"] = true
-        }
+      
+      self.identifyGraphicsOverlays(atScreenPoint: screenPoint, tolerance: 15, returnPopupsOnly: false) { [weak self] (result, _) in
         guard let result = result, !result.isEmpty else {
           self?.onSingleTap!(reactResult)
           return
         }
         
         for item in result {
-          if item.graphicsOverlay is RNEsriGraphicsOverlay, let closestGraphic = item.graphics.first
+          if item.graphicsOverlay is RNEsriGraphicsOverlay
           {
             if self?.recenterIfGraphicTapped ?? false {
+              reactResult["referenceId"] = item.graphics.first?.attributes["referenceId"]
+              
               self?.setViewpointCenter(mapPoint, completion: nil)
               if let alert = item.graphics.first?.attributes["alert"] as! Alert? {
-                let popup = Popup(frame: UIScreen.main.bounds, title: alert.title, description:alert.description, closeText: alert.closeText, continueText:alert.continueText, continueCallback: { () in print("Hello, world!") })
+                let popup = Popup(frame: UIScreen.main.bounds, title: alert.title, description:alert.description, closeText: alert.closeText, continueText:alert.continueText, continueCallback: { () in self?.onTapPopupButton!(reactResult) })
                 let window = UIApplication.shared.windows.last
                 window?.addSubview(popup)
+              }
+              else
+              {
+                self?.onSingleTap!(reactResult)
               }
             }
           }
         }
-        self?.onSingleTap!(reactResult)
       }
     }
   }

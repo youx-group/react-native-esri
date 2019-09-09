@@ -26,7 +26,7 @@ class RNEsriMapView extends React.Component {
   // MARK: Props
   static propTypes = {
     basemapUrl: PropTypes.string,
-    initialMapCenter: PropTypes.arrayOf(PropTypes.object),
+    initialMapCenter: PropTypes.object,
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
     rotationEnabled: PropTypes.bool,
