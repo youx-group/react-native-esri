@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.author       = package['author']
   s.platform     = :ios, "11.0"
   s.source       = { :git => "https://github.com/gt4w-consultoria/react-native-esri.git", :tag => "#{s.version}" }
-  s.source_files  = "src/*.{h,m,swift}"
+  s.source_files  = "src/*.{h,m,swift,xib}"
   s.swift_version = '4.2'
 
   s.dependency 'React'
