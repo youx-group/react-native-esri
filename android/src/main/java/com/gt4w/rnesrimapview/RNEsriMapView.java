@@ -474,8 +474,8 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
                             if (recenterIfGraphicTapped) {
 
                                 // Center the map on tap
-                                mapView.setViewpointCenterAsync(((Point) result.getGeometry()));
-
+                                // mapView.setViewpointCenterAsync(((Point) result.getGeometry()));
+                                mapView.setViewpointGeometryAsync(result.getGeometry());
                             }
 
                             // If has a alert (popup), the popup is setted and the callback of the
