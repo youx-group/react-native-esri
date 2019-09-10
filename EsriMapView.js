@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from "prop-types";
+import React from "react";
 import {
   DeviceEventEmitter,
   findNodeHandle,
@@ -8,19 +8,22 @@ import {
   Platform,
   requireNativeComponent,
   UIManager
-} from 'react-native';
-const AGSMap = requireNativeComponent('RNEsriMapView', RNEsriMapView);
+} from "react-native";
+const AGSMap = requireNativeComponent("RNEsriMapView", RNEsriMapView);
 
 class RNEsriMapView extends React.Component {
   constructor(props) {
     super(props);
     var eventEmitter;
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       eventEmitter = new NativeEventEmitter(NativeModules.RNEsriMapViewModule);
     } else {
       eventEmitter = DeviceEventEmitter;
     }
-    eventEmitter.addListener('isRoutingChanged', this.props.onRoutingStatusUpdate);
+    eventEmitter.addListener(
+      "isRoutingChanged",
+      this.props.onRoutingStatusUpdate
+    );
   }
 
   // MARK: Props
@@ -38,31 +41,33 @@ class RNEsriMapView extends React.Component {
     onMapMoved: PropTypes.func,
     onSingleTap: PropTypes.func,
     addFeatureLayer: PropTypes.arrayOf(PropTypes.object),
-    onTapPopupButton: PropTypes.func,
+    onTapPopupButton: PropTypes.func
   };
 
   static defaultProps = {
     initialMapCenter: [
-      { latitude: -30.304790, longitude: -53.286374, scale: 7 }
+      { latitude: -30.30479, longitude: -53.286374, scale: 7 }
     ],
     minZoom: 0,
     maxZoom: 0,
     rotationEnabled: true,
-    basemapUrl: '',
-    onSingleTap: () => { },
-    onOverlayWasAdded: () => { },
-    onOverlayWasRemoved: () => { },
-    onOverlayWasModified: () => { },
-    onMapDidLoad: () => { },
-    onMapMoved: () => { },
-    onRoutingStatusUpdate: () => { },
-    onTapPopupButton: () => { },
-    routeUrl: '',
-    addFeatureLayer: [{
-      url: '',
-      outlineColor: '',
-      fillColor: ''
-    }]
+    basemapUrl: "",
+    onSingleTap: () => {},
+    onOverlayWasAdded: () => {},
+    onOverlayWasRemoved: () => {},
+    onOverlayWasModified: () => {},
+    onMapDidLoad: () => {},
+    onMapMoved: () => {},
+    onRoutingStatusUpdate: () => {},
+    onTapPopupButton: () => {},
+    routeUrl: "",
+    addFeatureLayer: [
+      {
+        url: "",
+        outlineColor: "",
+        fillColor: ""
+      }
+    ]
   };
 
   isRouting = false;
@@ -71,7 +76,8 @@ class RNEsriMapView extends React.Component {
   showCallout = args => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands.showCalloutViaManager,
+      UIManager.getViewManagerConfig("RNEsriMapView").Commands
+        .showCalloutViaManager,
       [args]
     );
   };
@@ -79,7 +85,8 @@ class RNEsriMapView extends React.Component {
   recenterMap = pointArray => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands.centerMapViaManager,
+      UIManager.getViewManagerConfig("RNEsriMapView").Commands
+        .centerMapViaManager,
       [pointArray]
     );
   };
@@ -87,7 +94,8 @@ class RNEsriMapView extends React.Component {
   addFeatureLayer = featureData => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands.addFeatureLayerViaManager,
+      UIManager.getViewManagerConfig("RNEsriMapView").Commands
+        .addFeatureLayerViaManager,
       [featureData]
     );
   };
@@ -95,7 +103,8 @@ class RNEsriMapView extends React.Component {
   removeFeatureLayer = featureId => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands.removeFeatureLayerViaManager,
+      UIManager.getViewManagerConfig("RNEsriMapView").Commands
+        .removeFeatureLayerViaManager,
       [featureId]
     );
   };
@@ -103,7 +112,8 @@ class RNEsriMapView extends React.Component {
   addGraphicsOverlay = overlayData => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands.addGraphicsOverlayViaManager,
+      UIManager.getViewManagerConfig("RNEsriMapView").Commands
+        .addGraphicsOverlayViaManager,
       [overlayData]
     );
   };
@@ -111,7 +121,8 @@ class RNEsriMapView extends React.Component {
   removeGraphicsOverlay = overlayId => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands.removeGraphicsOverlayViaManager,
+      UIManager.getViewManagerConfig("RNEsriMapView").Commands
+        .removeGraphicsOverlayViaManager,
       [overlayId]
     );
   };
@@ -119,16 +130,18 @@ class RNEsriMapView extends React.Component {
   routeGraphicsOverlay = args => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands.routeGraphicsOverlayViaManager,
+      UIManager.getViewManagerConfig("RNEsriMapView").Commands
+        .routeGraphicsOverlayViaManager,
       [args]
     );
   };
 
   getRouteIsVisible = callback => {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       UIManager.dispatchViewManagerCommand(
         findNodeHandle(this.agsMapRef),
-        UIManager.getViewManagerConfig('RNEsriMapView').Commands.getRouteIsVisibleViaManager,
+        UIManager.getViewManagerConfig("RNEsriMapView").Commands
+          .getRouteIsVisibleViaManager,
         [callback]
       );
     } else {
@@ -142,7 +155,8 @@ class RNEsriMapView extends React.Component {
   setRouteIsVisible = args => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands.setRouteIsVisibleViaManager,
+      UIManager.getViewManagerConfig("RNEsriMapView").Commands
+        .setRouteIsVisibleViaManager,
       [args]
     );
   };
@@ -156,8 +170,8 @@ class RNEsriMapView extends React.Component {
   componentWillUnmount() {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
-      UIManager.getViewManagerConfig('RNEsriMapView').Commands.dispose,
-      [args]
+      UIManager.getViewManagerConfig("RNEsriMapView").Commands.dispose,
+      []
     );
   }
 }
