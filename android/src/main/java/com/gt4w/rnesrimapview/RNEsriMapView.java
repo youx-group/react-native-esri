@@ -115,7 +115,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
 
     @SuppressLint("ClickableViewAccessibility")
     public void setUpMap() {
-        mapView.setMap(new ArcGISMap(Basemap.Type.STREETS_VECTOR, -30.304790, -53.286374, 17));
+        mapView.setMap(new ArcGISMap(Basemap.Type.STREETS_NIGHT_VECTOR, -30.304790, -53.286374, 17));
         mapView.setOnTouchListener(new OnSingleTouchListener(getContext(), mapView));
         routeGraphicsOverlay = new GraphicsOverlay();
         mapView.getGraphicsOverlays().add(routeGraphicsOverlay);
