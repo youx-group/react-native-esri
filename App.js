@@ -19,7 +19,7 @@ const overlay2 = {
         description: 'CREPDEC: Central',
         closeText: 'Fechar',
         continueText: 'Ver mais'
-      },
+      }
     }
   ]
 };
@@ -79,16 +79,23 @@ const App = () => {
         }}
       >
         <EsriMapView
-          onSingleTap={(element)=> element.nativeEvent.referenceId && alert(element.nativeEvent.referenceId)}
-          onTapPopupButton={(element) => alert(element.nativeEvent.referenceId)}
+          onSingleTap={element =>
+            element.nativeEvent.referenceId &&
+            alert(element.nativeEvent.referenceId)
+          }
+          onTapPopupButton={element => alert(element.nativeEvent.referenceId)}
           ref={element => (mapView = element)}
           style={{ width: '100%', flex: 1 }}
-          initialMapCenter={{ latitude: -30.30479, longitude: -53.286374, scale: 7, duration: 2 }}
+          initialMapCenter={{
+            latitude: -30.30479,
+            longitude: -53.286374,
+            scale: 7,
+            duration: 2
+          }}
           recenterIfGraphicTapped={true}
           rotationEnabled={false}
-          mapBasemap={{ type: 'normal' }}
         />
-        
+
         <View
           style={{
             height: 56,
