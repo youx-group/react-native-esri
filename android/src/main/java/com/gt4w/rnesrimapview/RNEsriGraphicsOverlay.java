@@ -31,12 +31,11 @@ public class RNEsriGraphicsOverlay {
 
     public RNEsriGraphicsOverlay(ReadableMap rawData, GraphicsOverlay graphicsOverlay) {
         this.referenceId = rawData.getString("referenceId");
-        
+        this.graphicsOverlay = graphicsOverlay;
         // Create graphics within overlay
         if (rawData.hasKey("points")) {
             ReadableArray pointImageDictionaryRaw = rawData.getArray("pointGraphics");
             pointImageDictionary = new HashMap<>();
-            this.graphicsOverlay = graphicsOverlay;
 
             for (int i = 0; i < pointImageDictionaryRaw.size(); i++) {
                 ReadableMap item = pointImageDictionaryRaw.getMap(i);
@@ -56,47 +55,44 @@ public class RNEsriGraphicsOverlay {
 
         // If the geometry was a polygon
         if (rawData.hasKey("polygons")) {
-
             // Get the array of polygons
             ReadableArray rawPoints = rawData.getArray("polygons");
 
-            // Get the points
-            ReadableMap item = rawPoints.getMap(0);
+            for(int j = 0; j < rawPoints.size(); j++)
+            {
+                ReadableMap item = rawPoints.getMap(j);
 
-            PointCollection polygonPoints = new PointCollection(SpatialReferences.getWgs84());
+                PointCollection polygonPoints = new PointCollection(SpatialReferences.getWgs84());
+                for (int i = 0; i < item.getArray("points").size(); i++) {
 
-            for (int i = 0; i < item.getArray("points").size(); i++) {
+                    Double latitude = item.getArray("points").getMap(i).getDouble("latitude");
+                    Double longitude = item.getArray("points").getMap(i).getDouble("longitude");
+                    polygonPoints.add(longitude, latitude);
+                }
 
-                // Create a point, with the latitude and longitude of the point
-                com.esri.arcgisruntime.geometry.Point point = new com.esri.arcgisruntime.geometry.Point(
-                        item.getArray("points").getMap(i).getDouble("latitude"),
-                        item.getArray("points").getMap(i).getDouble("longitude"));
+                Polygon polygon = new Polygon(polygonPoints);
 
-                polygonPoints.add(point);
+                // Style of the polygon
+                String fillColor = item.getString("fillColor");
+                String outlineColor = item.getString("outlineColor");
+                SimpleFillSymbol polygonSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.SOLID, Color.parseColor(fillColor),
+                        new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.parseColor(outlineColor), 2.0f));
 
+                // Get the reference id
+                String referenceId = item.getString("referenceId");
+
+                // Create the attributes, where you can put some information about the polygon,
+                // like the referenceID
+                Map<String, Object> attributes = new HashMap<>();
+
+                Graphic graphic = new Graphic(polygon, attributes, polygonSymbol);
+
+                // Put the referenceID in the graphics attributes
+                graphic.getAttributes().put("referenceId", referenceId);
+
+                // Render the polygon
+                graphicsOverlay.getGraphics().add(graphic);
             }
-
-            // Create the polygon, with the points
-            Polygon polygon = new Polygon(polygonPoints);
-
-            // Style of the polygon
-            SimpleFillSymbol polygonSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.NULL, Color.rgb(226, 119, 40),
-                    new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 2.0f));
-
-            // Get the reference id
-            String referenceId = rawData.getString("referenceId");
-
-            // Create the attributes, where you can put some information about the polygon,
-            // like the referenceID
-            Map<String, Object> attributes = new HashMap<>();
-
-            Graphic graphic = new Graphic(polygon, attributes, polygonSymbol);
-
-            // Put the referenceID in the grphics attributes
-            graphic.getAttributes().put("referenceId", referenceId);
-
-            // Render the polygon
-            graphicsOverlay.getGraphics().add(graphic);
 
         }
     }
