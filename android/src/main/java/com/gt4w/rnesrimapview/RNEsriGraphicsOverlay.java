@@ -31,20 +31,22 @@ public class RNEsriGraphicsOverlay {
 
     public RNEsriGraphicsOverlay(ReadableMap rawData, GraphicsOverlay graphicsOverlay) {
         this.referenceId = rawData.getString("referenceId");
-        ReadableArray pointImageDictionaryRaw = rawData.getArray("pointGraphics");
-        pointImageDictionary = new HashMap<>();
-        this.graphicsOverlay = graphicsOverlay;
-
-        for (int i = 0; i < pointImageDictionaryRaw.size(); i++) {
-            ReadableMap item = pointImageDictionaryRaw.getMap(i);
-            if (item.hasKey("graphicId")) {
-                String graphicId = item.getString("graphicId");
-                String uri = item.getMap("graphic").getString("uri");
-                pointImageDictionary.put(graphicId, uri);
-            }
-        }
+        
         // Create graphics within overlay
         if (rawData.hasKey("points")) {
+            ReadableArray pointImageDictionaryRaw = rawData.getArray("pointGraphics");
+            pointImageDictionary = new HashMap<>();
+            this.graphicsOverlay = graphicsOverlay;
+
+            for (int i = 0; i < pointImageDictionaryRaw.size(); i++) {
+                ReadableMap item = pointImageDictionaryRaw.getMap(i);
+                if (item.hasKey("graphicId")) {
+                    String graphicId = item.getString("graphicId");
+                    String uri = item.getMap("graphic").getString("uri");
+                    pointImageDictionary.put(graphicId, uri);
+                }
+            }
+
             ReadableArray rawPoints = rawData.getArray("points");
             for (int i = 0; i < rawPoints.size(); i++) {
                 addGraphicsLoop(rawPoints.getMap(i));
