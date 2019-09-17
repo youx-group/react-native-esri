@@ -161,13 +161,11 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
         recenterIfGraphicTapped = value;
     }
 
-    public void setInitialMapCenter(ReadableArray initialCenter) {
+    public void setInitialMapCenter(ReadableMap initialCenter) {
 
-        ReadableMap item = initialCenter.getMap(0);
-
-        Double latitude = item.getDouble("latitude");
-        Double longitude = item.getDouble("longitude");
-        Integer scale = item.getInt("scale");
+        Double latitude = initialCenter.getDouble("latitude");
+        Double longitude = initialCenter.getDouble("longitude");
+        Integer scale = initialCenter.getInt("scale");
 
         ArcGISMap initialMap = new ArcGISMap(Basemap.Type.STREETS_VECTOR, latitude, longitude, scale);
 

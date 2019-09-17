@@ -50,8 +50,8 @@ public class RNEsriMapViewManager extends SimpleViewManager<RNEsriMapView> {
     }
 
     @ReactProp(name = "initialMapCenter")
-    public void setInitialMapCenter(RNEsriMapView view, ReadableArray array) {
-        view.setInitialMapCenter(array);
+    public void setInitialMapCenter(RNEsriMapView view, ReadableMap object) {
+        view.setInitialMapCenter(object);
     }
 
     @ReactProp(name = "recenterIfGraphicTapped", defaultBoolean = false)
