@@ -167,7 +167,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
         Double longitude = initialCenter.getDouble("longitude");
         Integer scale = initialCenter.getInt("scale");
 
-        ArcGISMap initialMap = new ArcGISMap(Basemap.Type.STREETS_VECTOR, latitude, longitude, scale);
+        ArcGISMap initialMap = new ArcGISMap(Basemap.Type.STREETS_NIGHT_VECTOR, latitude, longitude, scale);
 
         mapView.setMap(initialMap);
     }
