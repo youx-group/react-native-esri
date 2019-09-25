@@ -500,7 +500,10 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
                         if (result.getAttributes().get("title") == null) {
                             emitEvent("onSingleTap", map);
                         }
+                    } else {
+                        emitEvent("onSingleTap", map);
                     }
+
                 }
             });
 
