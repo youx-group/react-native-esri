@@ -16,9 +16,7 @@ public class RNEsriMapViewManager extends SimpleViewManager<RNEsriMapView> {
     private final int CENTER_MAP = 2;
     private final int ADD_GRAPHICS_OVERLAY = 3;
     private final int REMOVE_GRAPHICS_OVERLAY = 4;
-    private final int ADD_POINTS_TO_OVERLAY = 5;
     private final int REMOVE_POINTS_FROM_OVERLAY = 6;
-    private final int UPDATE_POINTS_IN_GRAPHICS_OVERLAY = 7;
     private final int ROUTE_GRAPHICS_OVERLAY = 8;
     private final int SET_ROUTE_IS_VISIBLE = 9;
     private final int ADD_FEATURE_LAYER = 10;
@@ -83,9 +81,7 @@ public class RNEsriMapViewManager extends SimpleViewManager<RNEsriMapView> {
                 "centerMapViaManager", CENTER_MAP,
                 "addGraphicsOverlayViaManager", ADD_GRAPHICS_OVERLAY,
                 "removeGraphicsOverlayViaManager",REMOVE_GRAPHICS_OVERLAY,
-                "addPointsToOverlayViaManager",ADD_POINTS_TO_OVERLAY,
-                "removePointsFromOverlayViaManager", REMOVE_POINTS_FROM_OVERLAY,
-                "updatePointsInGraphicsOverlayViaManager", UPDATE_POINTS_IN_GRAPHICS_OVERLAY
+                "removePointsFromOverlayViaManager", REMOVE_POINTS_FROM_OVERLAY
         );
         // Ran out of space in the constructor lol
         map.put("routeGraphicsOverlayViaManager",ROUTE_GRAPHICS_OVERLAY);
@@ -102,11 +98,9 @@ public class RNEsriMapViewManager extends SimpleViewManager<RNEsriMapView> {
         switch (command) {
             case SHOW_CALLOUT: mapView.showCallout(args.getMap(0));return;
             case CENTER_MAP: mapView.centerMap(args.getArray(0));return;
-            case ADD_GRAPHICS_OVERLAY: mapView.addGraphicsOverlay(args.getMap(0));return;
+            case ADD_GRAPHICS_OVERLAY: mapView.addGraphicsOverlay(args.getMap(0),args.getMap(1));return;
             case REMOVE_GRAPHICS_OVERLAY: mapView.removeGraphicsOverlay(args.getString(0));return;
-            case ADD_POINTS_TO_OVERLAY: mapView.addPointsToOverlay(args.getMap(0));return;
             case REMOVE_POINTS_FROM_OVERLAY: mapView.removePointsFromOverlay(args.getMap(0));return;
-            case UPDATE_POINTS_IN_GRAPHICS_OVERLAY: mapView.updatePointsInGraphicsOverlay(args.getMap(0));return;
             case ROUTE_GRAPHICS_OVERLAY: mapView.routeGraphicsOverlay(args.getMap(0));return;
             case SET_ROUTE_IS_VISIBLE: mapView.setRouteIsVisible(args.getBoolean(0));return;
             case ADD_FEATURE_LAYER: mapView.addFeatureLayer(args.getMap(0));return;

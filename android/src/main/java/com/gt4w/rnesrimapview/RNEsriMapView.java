@@ -2,7 +2,10 @@ package com.gt4w.rnesrimapview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.util.Log;
@@ -60,6 +63,7 @@ import com.facebook.react.uimanager.events.RCTEventEmitter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
@@ -271,11 +275,103 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
     }
 
     // Layer add/remove
-    public void addGraphicsOverlay(ReadableMap args) {
+    public void addGraphicsOverlay(ReadableMap rawData,ReadableMap isDebug) {
+        String referenceId = rawData.getString("referenceId");
         GraphicsOverlay graphicsOverlay = new GraphicsOverlay();
+        HashMap pointImageDictionary;
+
+        Boolean isDebugMode = isDebug.getBoolean("isDebug");
+
+        if(isDebugMode == true){
+            pointImageDictionary = new HashMap<String, String>();
+        }else {
+            pointImageDictionary = new HashMap<String, BitmapDrawable>();
+        }
+
+
+
         mapView.getGraphicsOverlays().add(graphicsOverlay);
-        RNEsriGraphicsOverlay overlay = new RNEsriGraphicsOverlay(args, graphicsOverlay);
+
+        // Create graphics within overlay
+        if (rawData.hasKey("points")) {
+            ReadableArray pointImageDictionaryRaw = rawData.getArray("pointGraphics");
+
+            for (int i = 0; i < pointImageDictionaryRaw.size(); i++) {
+                ReadableMap item = pointImageDictionaryRaw.getMap(i);
+                if (item.hasKey("graphicId")) {
+                    String graphicId = item.getString("graphicId");
+                    String uri = item.getMap("graphic").getString("uri");
+
+                    if(isDebugMode){
+                        pointImageDictionary.put(graphicId, uri);
+                    }else{
+                        int resourceId = getContext().getApplicationContext().getResources().getIdentifier(uri, "drawable",  getContext().getApplicationContext().getPackageName());
+                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
+                        BitmapDrawable image = new BitmapDrawable(getResources(), bitmap);
+                        pointImageDictionary.put(graphicId, image);
+                    }
+
+                }
+            }
+
+            ReadableArray rawPoints = rawData.getArray("points");
+            for (int i = 0; i < rawPoints.size(); i++) {
+                addGraphicsLoop(rawPoints.getMap(i),pointImageDictionary,graphicsOverlay,isDebugMode);
+
+            }
+        }
+
+        // If the geometry was a polygon
+        if (rawData.hasKey("polygons")) {
+            // Get the array of polygons
+            ReadableArray rawPoints = rawData.getArray("polygons");
+
+            for(int j = 0; j < rawPoints.size(); j++)
+            {
+                ReadableMap item = rawPoints.getMap(j);
+
+                PointCollection polygonPoints = new PointCollection(SpatialReferences.getWgs84());
+                for (int i = 0; i < item.getArray("points").size(); i++) {
+
+                    Double latitude = item.getArray("points").getMap(i).getDouble("latitude");
+                    Double longitude = item.getArray("points").getMap(i).getDouble("longitude");
+                    polygonPoints.add(longitude, latitude);
+                }
+
+                Polygon polygon = new Polygon(polygonPoints);
+
+                // Style of the polygon
+                String fillColor = item.getString("fillColor");
+                String outlineColor = item.getString("outlineColor");
+                SimpleFillSymbol polygonSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.SOLID, Color.parseColor(fillColor),
+                        new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.parseColor(outlineColor), 2.0f));
+
+                // Get the reference id
+                String referenceIdPolygon = item.getString("referenceId");
+
+                // Create the attributes, where you can put some information about the polygon,
+                // like the referenceID
+                Map<String, Object> attributes = new HashMap<>();
+
+                Graphic graphic = new Graphic(polygon, attributes, polygonSymbol);
+
+                // Put the referenceID in the graphics attributes
+                graphic.getAttributes().put("referenceId", referenceIdPolygon);
+
+                // Render the polygon
+                graphicsOverlay.getGraphics().add(graphic);
+            }
+
+        }
+
+        RNEsriGraphicsOverlay overlay = new RNEsriGraphicsOverlay(referenceId,graphicsOverlay);
         rnGraphicsOverlays.put(overlay.getReferenceId(), overlay);
+    }
+
+    private void addGraphicsLoop(ReadableMap map,HashMap pointImageDictionary,GraphicsOverlay graphicsOverlay, Boolean isDebug) {
+        RNEsriGraphicsOverlay.Point point = RNEsriGraphicsOverlay.Point.fromRawData(map);
+        Graphic graphic = RNEsriGraphicsOverlay.rnPointToAGSGraphic(point, pointImageDictionary, isDebug);
+        graphicsOverlay.getGraphics().add(graphic);
     }
 
     public void removeGraphicsOverlay(String removalId) {
@@ -286,36 +382,6 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
         }
         mapView.getGraphicsOverlays().remove(overlay.getAGSGraphicsOverlay());
         rnGraphicsOverlays.remove(removalId);
-    }
-
-    // Point updates
-    public void updatePointsInGraphicsOverlay(ReadableMap args) {
-        if (!args.hasKey("overlayReferenceId")) {
-            Log.w("Warning (AGS)", "No overlay with the associated ID was found.");
-            return;
-        }
-        Boolean shouldAnimateUpdate = false;
-        if (args.hasKey("animated")) {
-            shouldAnimateUpdate = args.getBoolean("animated");
-        }
-        String overlayReferenceId = args.getString("overlayReferenceId");
-        RNEsriGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
-        if (overlay != null && args.hasKey("updates")) {
-            overlay.setShouldAnimateUpdate(shouldAnimateUpdate);
-            overlay.updateGraphics(args.getArray("updates"));
-        }
-    }
-
-    public void addPointsToOverlay(ReadableMap args) {
-        if (!args.hasKey("overlayReferenceId")) {
-            Log.w("Warning (AGS)", "No overlay with the associated ID was found.");
-            return;
-        }
-        String overlayReferenceId = args.getString("overlayReferenceId");
-        RNEsriGraphicsOverlay overlay = rnGraphicsOverlays.get(overlayReferenceId);
-        if (overlay != null && args.hasKey("points")) {
-            overlay.addGraphics(args.getArray("points"));
-        }
     }
 
     public void removePointsFromOverlay(ReadableMap args) {

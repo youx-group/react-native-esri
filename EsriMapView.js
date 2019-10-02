@@ -110,11 +110,12 @@ class RNEsriMapView extends React.Component {
   };
 
   addGraphicsOverlay = overlayData => {
+    const isDebug = {isDebug: __DEV__};
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.agsMapRef),
       UIManager.getViewManagerConfig("RNEsriMapView").Commands
         .addGraphicsOverlayViaManager,
-      [overlayData]
+      [overlayData,isDebug]
     );
   };
 
