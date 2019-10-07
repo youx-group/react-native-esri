@@ -119,7 +119,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
 
     @SuppressLint("ClickableViewAccessibility")
     public void setUpMap() {
-        mapView.setMap(new ArcGISMap(Basemap.Type.STREETS_NIGHT_VECTOR, -30.304790, -53.286374, 17));
+        mapView.setMap(new ArcGISMap(Basemap.Type.IMAGERY_WITH_LABELS, -30.304790, -53.286374, 17));
         mapView.setOnTouchListener(new OnSingleTouchListener(getContext(), mapView));
         routeGraphicsOverlay = new GraphicsOverlay();
         mapView.getGraphicsOverlays().add(routeGraphicsOverlay);
@@ -171,7 +171,7 @@ public class RNEsriMapView extends LinearLayout implements LifecycleEventListene
         Double longitude = initialCenter.getDouble("longitude");
         Integer scale = initialCenter.getInt("scale");
 
-        ArcGISMap initialMap = new ArcGISMap(Basemap.Type.STREETS_NIGHT_VECTOR, latitude, longitude, scale);
+        ArcGISMap initialMap = new ArcGISMap(Basemap.Type.IMAGERY_WITH_LABELS, latitude, longitude, scale);
 
         mapView.setMap(initialMap);
     }
