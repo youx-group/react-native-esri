@@ -47,8 +47,8 @@ RCT_EXTERN_METHOD(routeGraphicsOverlayViaManager:(nonnull NSNumber*) node args:(
 RCT_EXTERN_METHOD(routeIsShowing:(nonnull NSNumber*) node callback: (RCTResponseSenderBlock*)callback)
 RCT_EXTERN_METHOD(setRouteIsVisibleViaManager:(nonnull NSNumber*) node args:(BOOL*) args)
 RCT_EXTERN_METHOD(getRouteIsVisibleViaManager:(nonnull NSNumber*) node args:(BOOL*) args)
-RCT_EXTERN_METHOD(setLicenseKey:(nonnull NSString*)key)
 
+RCT_EXTERN_METHOD(setLicenseKey:(nonnull NSString*)key)
 RCT_EXTERN_METHOD(dispose:(nonnull NSNumber*) node)
 @end
 
