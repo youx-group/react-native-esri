@@ -47,14 +47,14 @@ class RNEsriMapViewManager: RCTViewManager {
       component.addFeatureLayer(args)
     }
   }
-
+  
   @objc func removeFeatureLayerViaManager(_ node: NSNumber, args: NSString){
     DispatchQueue.main.async {
       let component = self.bridge.uiManager.view(forReactTag: node) as! RNEsriMapView
       component.removeFeatureLayer(args)
     }
   }
-
+  
   
   @objc func addGraphicsOverlayViaManager(_ node: NSNumber, args: NSDictionary) {
     DispatchQueue.main.async {
@@ -92,9 +92,11 @@ class RNEsriMapViewManager: RCTViewManager {
   }
   
   @objc func dispose(_ node: NSNumber) {
-    self.agsMapView?.graphicsOverlays.removeAllObjects()
-    self.agsMapView?.map = nil
-    self.agsMapView = nil
+    DispatchQueue.main.async {
+      self.agsMapView?.graphicsOverlays.removeAllObjects()
+      self.agsMapView?.map = nil
+      self.agsMapView = nil
+    }
   }
   
   @objc func setLicenseKey(_ key: String) {

@@ -40,7 +40,7 @@ public class RNEsriMapView: AGSMapView, AGSGeoViewTouchDelegate {
   }
   
   func setUpMap() {
-    self.map = AGSMap(basemapType: .streetsWithReliefVector, latitude: 0, longitude: 0, levelOfDetail: 0)
+    self.map = AGSMap(basemapType: .imageryWithLabels, latitude: 0, longitude: 0, levelOfDetail: 0)
     
     self.map?.load(completion: {[weak self] (error) in
       if (self?.onMapDidLoad != nil){

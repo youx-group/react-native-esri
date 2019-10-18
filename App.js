@@ -68,6 +68,8 @@ const App = () => {
   const [overlay2State, setOverlay2State] = useState(false);
   const [featureState, setFeatureState] = useState(false);
 
+  const [visible, setVisible] = useState(true);
+
   return (
     <SafeAreaView style={{ backgroundColor: '#121212', flex: 1 }}>
       <View
@@ -78,23 +80,24 @@ const App = () => {
           justifyContent: 'flex-start'
         }}
       >
-        <EsriMapView
-          onSingleTap={element =>
-            element.nativeEvent.referenceId &&
-            alert(element.nativeEvent.referenceId)
-          }
-          onTapPopupButton={element => alert(element.nativeEvent.referenceId)}
-          ref={element => (mapView = element)}
-          style={{ width: '100%', flex: 1 }}
-          initialMapCenter={{
-            latitude: -30.30479,
-            longitude: -53.286374,
-            scale: 7,
-            duration: 2
-          }}
-          recenterIfGraphicTapped={true}
-          rotationEnabled={false}
-        />
+        {visible && (
+          <EsriMapView
+            onSingleTap={element =>
+              element.nativeEvent.referenceId && alert(element.nativeEvent.referenceId)
+            }
+            onTapPopupButton={element => alert(element.nativeEvent.referenceId)}
+            ref={element => (mapView = element)}
+            style={{ width: '100%', flex: 1 }}
+            initialMapCenter={{
+              latitude: -30.30479,
+              longitude: -53.286374,
+              scale: 7,
+              duration: 2
+            }}
+            recenterIfGraphicTapped={true}
+            rotationEnabled={false}
+          />
+        )}
 
         <View
           style={{
@@ -144,6 +147,16 @@ const App = () => {
               } else {
                 mapView.removeFeatureLayer('layer1');
                 setFeatureState(false);
+              }
+            }}
+          ></Button>
+          <Button
+            title='hide'
+            onPress={() => {
+              if (visible) {
+                setVisible(false);
+              } else {
+                setVisible(true);
               }
             }}
           ></Button>
