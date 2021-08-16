@@ -1,5 +1,5 @@
 PODS:
-  - ArcGIS-Runtime-SDK-iOS (100.6)
+  - ArcGIS-Runtime-SDK-iOS (100.6.1)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - Folly (2018.10.22.00):
@@ -84,7 +84,7 @@ PODS:
   - yoga (0.60.5.React)
 
 DEPENDENCIES:
-  - ArcGIS-Runtime-SDK-iOS (= 100.6)
+  - ArcGIS-Runtime-SDK-iOS (= 100.6.1)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
@@ -109,7 +109,7 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - ArcGIS-Runtime-SDK-iOS
     - boost-for-react-native
     - UIColor_Hex_Swift
@@ -159,7 +159,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  ArcGIS-Runtime-SDK-iOS: eaf6376bda9504f6bbf1952744c286f576da69d8
+  ArcGIS-Runtime-SDK-iOS: b691d73917635d8107c05b431d93ff304b3ffec3
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
@@ -184,6 +184,6 @@ SPEC CHECKSUMS:
   UIColor_Hex_Swift: 8be7432edacb7fa91c78aa05ef3c30b66e4f9415
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
-PODFILE CHECKSUM: 36ae3623d77f18143032998a6bc7cf5e80d66308
+PODFILE CHECKSUM: a102fb789dfbbc6747c3b6d094372984adfebe76
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.10.2
