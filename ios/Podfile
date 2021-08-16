@@ -27,7 +27,7 @@ target 'app' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'ArcGIS-Runtime-SDK-iOS', '100.6'
+  pod 'ArcGIS-Runtime-SDK-iOS', '100.6.1'
   pod 'UIColor_Hex_Swift', '~> 5.1.0'
 
   target 'appTests' do
