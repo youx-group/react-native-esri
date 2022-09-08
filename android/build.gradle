@@ -38,7 +38,7 @@ android {
         google()
         jcenter()
         maven {
-            url 'https://esri.bintray.com/arcgis'
+            url 'https://esri.jfrog.io/artifactory/arcgis'
         }
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
